@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<opml version="2.0">
+  <head>
+    <title>RSS Research Feeds</title>
+    <dateCreated>Fri, 15 May 2026 22:51:25 +0000</dateCreated>
+  </head>
+  <body>
+    <outline type="rss" text="Ad ML Research Feed" title="Ad ML Research Feed" xmlUrl="https://muratuysal.github.io/research/ad-ml-research.xml" htmlUrl="https://muratuysal.github.io/research" />
+  </body>
+</opml>
