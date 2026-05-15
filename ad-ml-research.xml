@@ -1,12 +1,197 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<rss xmlns:ns0="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>Ad ML Research Feed</title>
     <description>Deep research on ad CTR/CVR models, A/B testing, and online optimization</description>
     <link>https://muratuysal.github.io/research/ad-ml-research.xml</link>
-    <lastBuildDate>Fri, 15 May 2026 22:44:56 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 23:06:10 +0000</lastBuildDate>
     <generator>cc-deepfeed</generator>
-    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com" />
-    <atom:link rel="self" href="https://muratuysal.github.io/research/ad-ml-research.xml" type="application/rss+xml" />
+    <ns0:link rel="hub" href="https://pubsubhubbub.appspot.com" />
+    <ns0:link rel="self" href="https://muratuysal.github.io/research/ad-ml-research.xml" type="application/rss+xml" />
+    <item>
+      <title>SemBid：LLM语义表示如何赋能自动出价优化</title>
+      <description>&lt;p&gt;&lt;strong&gt;来源：&lt;/strong&gt;arXiv 2605.05833（2026年5月）&lt;br&gt;&lt;strong&gt;作者：&lt;/strong&gt;Guanyu Zhu, Jining Luan, Hanwen Du 等&lt;/p&gt;
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;自动出价（auto-bidding）已成为大规模广告系统的核心组件。现有方法主要依赖紧凑的数值状态表示（如预算消耗率、竞价历史序列），通过离线强化学习或生成式序列模型来优化长期价值。但这些数值表示在捕捉高层语义意图方面存在局限——例如广告主的业务目标、历史投放策略的语义特征等。与此同时，大语言模型（LLM）展现出强大的语义理解能力，但在精确数值决策方面表现不稳定，直接替代数值特征效果不佳。&lt;/p&gt;
+&lt;h2&gt;核心方法：SemBid&lt;/h2&gt;
+&lt;p&gt;论文提出 &lt;strong&gt;SemBid&lt;/strong&gt;，一种将LLM语义编码注入自动出价的框架。关键洞察是：LLM嵌入包含出价相关的语义线索（如任务类型、历史模式），但不能替代数值特征——需要精心的语义-数值融合。&lt;/p&gt;
+&lt;p&gt;SemBid引入三类语义输入：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Task语义&lt;/strong&gt;：编码广告主的优化目标和约束类型&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;History语义&lt;/strong&gt;：编码历史投放行为的语义摘要&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Strategy语义&lt;/strong&gt;：编码当前策略方向&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这三类语义token与数值轨迹token通过自注意力机制进行融合，使模型既能利用LLM的语义理解能力，又能保持数值决策的精确性。这种设计还增强了可控性——可以通过调整语义输入来引导出价行为。&lt;/p&gt;
+&lt;h2&gt;实验结果&lt;/h2&gt;
+&lt;p&gt;在多种场景和预算约束下，SemBid超越了离线RL和生成式序列模型的竞争基线。具体表现：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;整体性能指标优于纯数值方法&lt;/li&gt;
+&lt;li&gt;约束满足率更高（预算和CPA约束）&lt;/li&gt;
+&lt;li&gt;在不同预算区间下表现更鲁棒&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;论文已在GitHub开源代码。&lt;/p&gt;
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;这项工作揭示了LLM在广告出价中的正确使用方式——不是替代数值模型，而是作为语义特征提取器补充数值信号。对于实际系统，语义-数值融合的架构设计是关键，简单的拼接或替换都不理想。自注意力机制在这类异构特征融合中表现出色。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开放问题：&lt;/strong&gt;语义输入的构建成本如何？在实时出价场景下LLM推理延迟是否可接受？离线语义编码 + 在线数值推理的混合架构或许是更实用的方向。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;English Translation&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;SemBid: How LLM Semantic Representations Empower Auto-Bidding Optimization&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Source:&lt;/strong&gt; arXiv 2605.05833 (May 2026)&lt;br&gt;&lt;strong&gt;Authors:&lt;/strong&gt; Guanyu Zhu, Jining Luan, Hanwen Du et al.&lt;/p&gt;
+&lt;h2&gt;Problem Context&lt;/h2&gt;
+&lt;p&gt;Auto-bidding has become a core component of large-scale ad systems. Existing methods rely on compact numerical state representations (e.g., budget consumption rates, bidding history sequences) and optimize long-term value via offline RL or generative sequence models. However, these numerical representations are limited in capturing high-level semantic intent—such as advertiser business objectives and semantic features of historical delivery strategies. Meanwhile, LLMs exhibit strong semantic understanding but perform unstably in precise numerical decision-making, making direct replacement of numerical features suboptimal.&lt;/p&gt;
+&lt;h2&gt;Core Method: SemBid&lt;/h2&gt;
+&lt;p&gt;The paper proposes &lt;strong&gt;SemBid&lt;/strong&gt;, a framework that injects LLM semantic encoding into auto-bidding. The key insight: LLM embeddings contain bidding-relevant semantic cues (task type, historical patterns) but cannot replace numerical features—careful semantic-numerical fusion is needed.&lt;/p&gt;
+&lt;p&gt;SemBid introduces three types of semantic inputs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Task semantics&lt;/strong&gt;: encodes advertiser optimization objectives and constraint types&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;History semantics&lt;/strong&gt;: encodes semantic summaries of historical delivery behavior&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Strategy semantics&lt;/strong&gt;: encodes current strategy direction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These semantic tokens are fused with numerical trajectory tokens via self-attention, enabling the model to leverage LLM semantic understanding while maintaining numerical decision precision. This design also enhances controllability—bidding behavior can be guided by adjusting semantic inputs.&lt;/p&gt;
+&lt;h2&gt;Experimental Results&lt;/h2&gt;
+&lt;p&gt;Across diverse scenarios and budget constraints, SemBid outperforms competitive baselines from offline RL and generative sequence models:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Overall performance metrics superior to pure numerical methods&lt;/li&gt;
+&lt;li&gt;Higher constraint satisfaction rates (budget and CPA constraints)&lt;/li&gt;
+&lt;li&gt;More robust performance across different budget regimes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Code is open-sourced on GitHub.&lt;/p&gt;
+&lt;h2&gt;Practical Implications&lt;/h2&gt;
+&lt;p&gt;This work reveals the correct way to use LLMs in ad bidding—not as a replacement for numerical models, but as a semantic feature extractor to supplement numerical signals. For production systems, the semantic-numerical fusion architecture design is critical; simple concatenation or substitution both perform poorly. Self-attention excels at this type of heterogeneous feature fusion.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Open questions:&lt;/strong&gt; What is the cost of constructing semantic inputs? Is LLM inference latency acceptable in real-time bidding scenarios? A hybrid architecture with offline semantic encoding + online numerical reasoning may be a more practical direction.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2605.05833"&gt;https://arxiv.org/abs/2605.05833&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">29d177a9-0f2f-5eae-8909-1970d6131c80</guid>
+      <pubDate>Fri, 15 May 2026 23:05:10 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2605.05833</link>
+    </item>
+    <item>
+      <title>LBM：层次化大模型自动出价——推理与行动的分离架构</title>
+      <description>&lt;p&gt;&lt;strong&gt;来源：&lt;/strong&gt;arXiv 2603.05134（2026年3月）&lt;br&gt;&lt;strong&gt;作者：&lt;/strong&gt;Yewen Li, Zhiyi Lyu, Peng Jiang, Qingpeng Cai, Fei Pan, Bo An, Peng Jiang&lt;/p&gt;
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;随着广告拍卖规模的持续增长，手动出价已完全不可行，自动出价成为刚需。现有方法主要基于离线强化学习或生成式模型，但由于训练过程的黑箱特性，有时会产生反直觉的出价行为。LLM虽然在推理能力上有优势，但在竞争性拍卖中难以产生精确的动作，且容易出现幻觉和次优决策。&lt;/p&gt;
+&lt;h2&gt;核心方法：LBM&lt;/h2&gt;
+&lt;p&gt;论文提出 &lt;strong&gt;LBM（Large autoBidding Model）&lt;/strong&gt;，一种层次化的自动出价架构，将推理（Think）和行动（Act）分离为两个层级：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LBM-Think（高层推理）&lt;/strong&gt;：负责分析当前市场状态、理解广告主目标、制定出价策略方向。利用LLM的推理能力进行高层决策。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LBM-Act（低层行动）&lt;/strong&gt;：基于Think层的策略指导，生成精确的出价数值动作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两个关键技术创新：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;双嵌入机制（Dual Embedding）&lt;/strong&gt;：高效融合语言和数值两种模态的输入。语言模态捕捉策略意图和市场语义，数值模态提供精确的状态和约束信息。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GQPO（Generalized Q-Regularized Policy Optimization）&lt;/strong&gt;：一种离线强化学习微调技术，专门用于缓解LLM-Think的幻觉问题。无需仿真环境或真实世界部署即可训练，大幅降低了训练成本。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;实验结果&lt;/h2&gt;
+&lt;p&gt;实验证明LBM的生成式骨干网络在以下方面表现优越：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;训练效率&lt;/strong&gt;：相比传统RL方法收敛更快&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;泛化能力&lt;/strong&gt;：在未见过的广告主和场景中表现更稳定&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;可解释性&lt;/strong&gt;：Think层的推理过程可被检查和调试&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;LBM的核心贡献在于展示了如何将LLM的推理能力与精确数值控制结合。层次化架构是一个优雅的设计——高层负责"理解做什么"，低层负责"精确执行"。GQPO技术对于解决LLM在决策场景中的幻觉问题具有通用价值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;与SemBid的对比：&lt;/strong&gt;SemBid关注语义特征融合，LBM关注架构层面的推理-行动分离。两者代表了LLM赋能自动出价的两个不同但互补的方向。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开放问题：&lt;/strong&gt;层次化架构的推理延迟如何？在100ms级的实时竞价预算下是否可行？离线部署+定期更新的模式可能更适合这种架构。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;English Translation&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;LBM: Hierarchical Large Auto-Bidding Model via Reasoning and Acting&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Source:&lt;/strong&gt; arXiv 2603.05134 (March 2026)&lt;br&gt;&lt;strong&gt;Authors:&lt;/strong&gt; Yewen Li, Zhiyi Lyu, Peng Jiang, Qingpeng Cai, Fei Pan, Bo An, Peng Jiang&lt;/p&gt;
+&lt;h2&gt;Problem Context&lt;/h2&gt;
+&lt;p&gt;As ad auction scale continues to grow, manual bidding has become completely infeasible, making auto-bidding essential. Current methods based on offline RL or generative models sometimes produce counterintuitive bidding behavior due to their black-box training nature. While LLMs excel at reasoning, they struggle to produce precise actions in competitive auctions and are prone to hallucinations and suboptimal decisions.&lt;/p&gt;
+&lt;h2&gt;Core Method: LBM&lt;/h2&gt;
+&lt;p&gt;The paper proposes &lt;strong&gt;LBM (Large autoBidding Model)&lt;/strong&gt;, a hierarchical auto-bidding architecture that separates reasoning (Think) and acting (Act) into two layers:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;LBM-Think (high-level reasoning)&lt;/strong&gt;: Analyzes current market state, understands advertiser objectives, and formulates bidding strategy direction. Leverages LLM reasoning for high-level decisions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LBM-Act (low-level action)&lt;/strong&gt;: Generates precise numerical bid actions guided by the Think layer strategy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Two key technical innovations:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Dual Embedding Mechanism&lt;/strong&gt;: Efficiently fuses language and numerical modalities. Language modality captures strategy intent and market semantics; numerical modality provides precise state and constraint information.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GQPO (Generalized Q-Regularized Policy Optimization)&lt;/strong&gt;: An offline RL fine-tuning technique specifically designed to mitigate LBM-Think hallucinations. Training requires no simulation or real-world deployment, significantly reducing training costs.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Experimental Results&lt;/h2&gt;
+&lt;p&gt;Experiments demonstrate LBM generative backbone excels in:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Training efficiency&lt;/strong&gt;: Faster convergence compared to traditional RL methods&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Generalization&lt;/strong&gt;: More stable performance on unseen advertisers and scenarios&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Interpretability&lt;/strong&gt;: Think layer reasoning process is inspectable and debuggable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Practical Implications&lt;/h2&gt;
+&lt;p&gt;LBM core contribution is demonstrating how to combine LLM reasoning with precise numerical control. The hierarchical architecture is an elegant design. GQPO technology has general value for addressing LLM hallucinations in decision-making scenarios.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Comparison with SemBid:&lt;/strong&gt; SemBid focuses on semantic feature fusion; LBM focuses on architecture-level reasoning-acting separation. These represent two different but complementary directions for LLM-empowered auto-bidding.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Open questions:&lt;/strong&gt; What is the inference latency of the hierarchical architecture? Is it feasible under 100ms real-time bidding budgets? Offline deployment with periodic updates may be more suitable for this architecture.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2603.05134"&gt;https://arxiv.org/abs/2603.05134&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">1667ee57-1993-592d-932d-cb21c3df7bca</guid>
+      <pubDate>Fri, 15 May 2026 23:05:48 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2603.05134</link>
+    </item>
+    <item>
+      <title>BAR：阿里巴巴出价感知检索框架——解决广告多阶段不一致性</title>
+      <description>&lt;p&gt;&lt;strong&gt;来源：&lt;/strong&gt;arXiv 2508.05206（2025年8月）&lt;br&gt;&lt;strong&gt;作者：&lt;/strong&gt;Bin Liu, Yunfei Liu, Ziru Xu, Zhaoyu Zhou, Zhi Kou, Yeqiu Yang, Han Zhu, Jian Xu, Bo Zheng（阿里巴巴）&lt;/p&gt;
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;现代在线广告系统采用级联架构：召回→粗排→精排→竞价。各阶段按eCPM（有效千次展示成本）分配流量。随着自动出价的普及，一个关键的不一致性问题日益突出：&lt;strong&gt;召回阶段无法获取实时出价信息&lt;/strong&gt;。原因在于召回需要对全量广告库进行检索，而实时出价信息在计算上过于昂贵，无法在召回阶段使用。这导致召回阶段选出的广告候选集与后续排序阶段的出价逻辑不匹配，对平台和广告主都是次优的。&lt;/p&gt;
+&lt;h2&gt;核心方法：BAR&lt;/h2&gt;
+&lt;p&gt;论文提出 &lt;strong&gt;BAR（Bidding-Aware Retrieval）&lt;/strong&gt;，一种模型驱动的检索框架，将出价信息融入检索评分函数，从根源解决多阶段不一致问题。三个核心组件：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;出价感知建模（Bidding-Aware Modeling）&lt;/strong&gt;：通过单调性约束学习（monotonicity-constrained learning）和多任务蒸馏（multi-task distillation），将出价信号注入检索模型的embedding表示中，确保经济逻辑的一致性。单调性约束保证了"出价越高，检索得分越高"的基本经济学直觉。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;异步近线推理（Asynchronous Near-Line Inference）&lt;/strong&gt;：实现embedding的实时更新，使检索模型能够快速响应市场变化（如广告主调价、预算变化），而不需要等待完整的模型重训练周期。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;任务注意力精炼（Task-Attentive Refinement）&lt;/strong&gt;：选择性增强特征交互，解耦用户兴趣信号和商业价值信号，避免两者相互干扰。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;实验结果&lt;/h2&gt;
+&lt;p&gt;在阿里巴巴展示广告平台的全量部署结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;平台收入提升4.32%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;正向运营广告主的展示量提升22.2%&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两个指标的同时提升表明BAR不仅改善了平台效率，也切实帮助了广告主获得更多曝光机会。&lt;/p&gt;
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;BAR解决的是一个非常实际的工程问题：在级联架构中，如何让早期阶段感知后期阶段的决策逻辑。这个问题在自动出价时代尤为严重，因为出价是动态的、实时变化的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;技术亮点：&lt;/strong&gt;单调性约束是一个巧妙的设计——它将经济学先验（出价与展示机会正相关）编码进了模型，既保证了合理性又提升了效果。异步近线推理解决了"实时性vs计算成本"的矛盾。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;适用范围：&lt;/strong&gt;这种思路不仅适用于广告召回，任何多阶段决策系统（如推荐系统、搜索排序）中的阶段一致性问题都可以借鉴。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开放问题：&lt;/strong&gt;在广告主数量极大时，出价信号的embedding维度如何控制？异步更新的频率与一致性保证之间如何权衡？&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;English Translation&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;BAR: Alibaba Bidding-Aware Retrieval Framework — Resolving Multi-Stage Inconsistency in Advertising&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Source:&lt;/strong&gt; arXiv 2508.05206 (August 2025)&lt;br&gt;&lt;strong&gt;Authors:&lt;/strong&gt; Bin Liu, Yunfei Liu, Ziru Xu, Zhaoyu Zhou, Zhi Kou, Yeqiu Yang, Han Zhu, Jian Xu, Bo Zheng (Alibaba)&lt;/p&gt;
+&lt;h2&gt;Problem Context&lt;/h2&gt;
+&lt;p&gt;Modern online ad systems use a cascaded architecture: retrieval, coarse ranking, fine ranking, and auction. Each stage allocates traffic based on eCPM. With the growing popularity of auto-bidding, a critical inconsistency problem has become more pronounced: &lt;strong&gt;the retrieval stage cannot access real-time bid information&lt;/strong&gt;. This is because retrieval must search the entire ad corpus, and real-time bid signals are too computationally expensive to use at the retrieval stage. This causes the candidate ads selected by retrieval to be misaligned with the bidding logic of downstream ranking stages, resulting in suboptimal outcomes for both the platform and advertisers.&lt;/p&gt;
+&lt;h2&gt;Core Method: BAR&lt;/h2&gt;
+&lt;p&gt;The paper proposes &lt;strong&gt;BAR (Bidding-Aware Retrieval)&lt;/strong&gt;, a model-driven retrieval framework that incorporates bid signals into the retrieval scoring function, addressing multi-stage inconsistency at its root. Three core components:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Bidding-Aware Modeling&lt;/strong&gt;: Injects bid signals into retrieval model embeddings via monotonicity-constrained learning and multi-task distillation, ensuring economic coherence. Monotonicity constraints encode the economic prior that higher bids should lead to higher retrieval scores.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Asynchronous Near-Line Inference&lt;/strong&gt;: Enables real-time embedding updates so the retrieval model can quickly respond to market changes (e.g., advertiser bid adjustments, budget changes) without waiting for full model retraining.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Task-Attentive Refinement&lt;/strong&gt;: Selectively enhances feature interactions to disentangle user interest signals from commercial value signals, preventing mutual interference.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Experimental Results&lt;/h2&gt;
+&lt;p&gt;Full-scale deployment results on Alibaba display advertising platform:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Platform revenue increase of 4.32%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;22.2% impression lift for positively-operated advertisers&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The simultaneous improvement in both metrics indicates BAR not only improves platform efficiency but also tangibly helps advertisers gain more exposure opportunities.&lt;/p&gt;
+&lt;h2&gt;Practical Implications&lt;/h2&gt;
+&lt;p&gt;BAR addresses a very practical engineering problem: how to let early stages in a cascaded architecture perceive the decision logic of later stages. This problem is particularly acute in the auto-bidding era because bids are dynamic and change in real-time.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Technical highlights:&lt;/strong&gt; Monotonicity constraints are an elegant design—they encode economic priors (bids positively correlated with display opportunities) into the model, ensuring both合理性 and improved performance. Asynchronous near-line inference resolves the tension between real-time responsiveness and computational cost.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Applicability:&lt;/strong&gt; This approach extends beyond ad retrieval. Any multi-stage decision system (recommendation systems, search ranking) with stage consistency challenges can benefit from similar ideas.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Open questions:&lt;/strong&gt; How to control the embedding dimension of bid signals when the number of advertisers is very large? How to balance asynchronous update frequency with consistency guarantees?&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2508.05206"&gt;https://arxiv.org/abs/2508.05206&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">8b024c4a-0b2c-5a40-b74f-4da2893a18cd</guid>
+      <pubDate>Fri, 15 May 2026 23:06:10 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2508.05206</link>
+    </item>
   </channel>
 </rss>
