@@ -4,7 +4,7 @@
     <title>Ad ML Research Feed</title>
     <description>Deep research on ad CTR/CVR models, A/B testing, and online optimization</description>
     <link>https://muratuysal.github.io/research/ad-ml-research.xml</link>
-    <lastBuildDate>Fri, 15 May 2026 23:06:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 May 2026 23:22:56 +0000</lastBuildDate>
     <generator>cc-deepfeed</generator>
     <ns0:link rel="hub" href="https://pubsubhubbub.appspot.com" />
     <ns0:link rel="self" href="https://muratuysal.github.io/research/ad-ml-research.xml" type="application/rss+xml" />
@@ -192,6 +192,388 @@
       <pubDate>Fri, 15 May 2026 23:06:10 +0000</pubDate>
       <category>ad-ml-optimization</category>
       <link>https://arxiv.org/abs/2508.05206</link>
+    </item>
+    <item>
+      <title>CADET：LinkedIn的Decoder-Only Transformer如何实现广告CTR 11%在线提升</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;LinkedIn广告排序长期依赖DCNv2与序列编码器的混合架构（LiRank），但Transformer在工业级CTR预测中的落地面临三大挑战：后评分上下文信号的处理、离线-在线一致性、以及工业负载下的扩展性。传统encoder架构在处理广告位置等post-scoring信号时效率低下，且自注意力机制的O(n²)复杂度在海量候选场景下成为瓶颈。&lt;/p&gt;
+
+&lt;h2&gt;核心方法&lt;/h2&gt;
+&lt;p&gt;LinkedIn团队提出CADET（Context-conditioned Ads CTR prediction with a Decoder-only Transformer），采用decoder-only架构替代传统encoder设计，核心创新包括四个方面：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 上下文条件解码架构（Context-Conditioned Decoding）&lt;/strong&gt;：多塔预测头显式建模广告位置等post-scoring信号，将上下文信息作为解码条件而非输入特征，从根本上解决了传统方法中位置信号与内容信号纠缠的问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 自门控注意力机制（Self-Gated Attention）&lt;/strong&gt;：在表征层和交互层自适应调节信息流，稳定训练过程。这一设计避免了标准Transformer在广告场景中常见的训练不稳定问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 时间戳RoPE变体（Timestamp-based RoPE）&lt;/strong&gt;：捕获从秒级到月级的多时间尺度关系，对用户行为序列中的时间动态建模至关重要——用户的即时兴趣与长期偏好在广告点击决策中扮演不同角色。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. 会话掩码策略（Session Masking）&lt;/strong&gt;：通过防止模型学习对不可用会话内事件的依赖，解决训练-服务偏差（train-serve skew），这是工业部署中的关键工程挑战。&lt;/p&gt;
+
+&lt;h2&gt;工程优化&lt;/h2&gt;
+&lt;p&gt;在生产工程层面，CADET采用了张量打包（tensor packing）、序列分块（sequence chunking）和定制Flash Attention内核等技术，使decoder-only架构能够在LinkedIn的工业级负载下高效运行。&lt;/p&gt;
+
+&lt;h2&gt;在线效果&lt;/h2&gt;
+&lt;p&gt;CADET在LinkedIn主站Homefeed Sponsored Updates上进行了全量A/B测试，相比LiRank生产基线实现了&lt;strong&gt;11.04%的CTR在线提升&lt;/strong&gt;。这一数字在LinkedIn广告规模下意义重大——即使是1%的CTR改善也意味着数百万美元的广告收入变化。&lt;/p&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;CADET的成功表明decoder-only架构在广告CTR预测中具有巨大潜力。相比encoder架构，decoder的自回归特性天然适合处理序列化的用户行为数据，且通过上下文条件解码可以优雅地处理post-scoring信号。自门控注意力和时间戳RoPE的设计对其他需要处理多时间尺度行为序列的推荐系统也具有借鉴意义。&lt;/p&gt;
+
+&lt;p&gt;开放问题：decoder-only架构在CVR预测和多任务学习场景中的表现如何？自门控机制是否可以推广到更大的模型规模？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2602.11410"&gt;https://arxiv.org/abs/2602.11410&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">1f9b3875-ce46-5137-9010-f47920bdf17b</guid>
+      <pubDate>Fri, 15 May 2026 23:21:12 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2602.11410</link>
+    </item>
+    <item>
+      <title>EST：淘宝展示广告的CTR缩放定律——统一建模实现3.27% RPM提升</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;工业级CTR预测模型的规模化面临一个根本矛盾：LLM领域的缩放定律（Scaling Laws）表明模型越大性能越好，但CTR预测的信息结构与LLM截然不同。现有方法在用户行为特征和非行为特征之间采用早期聚合（early aggregation），造成信息瓶颈——丢弃了细粒度的token级信号。这使得CTR模型难以像LLM那样实现可预测的性能缩放。&lt;/p&gt;
+
+&lt;h2&gt;核心洞察&lt;/h2&gt;
+&lt;p&gt;论文识别出CTR预测与LLM之间的两个根本性差异：（1）行为特征与非行为特征之间的信息密度不对称性——用户行为序列承载了大量个性化信号，而静态特征（如广告属性）信息密度较低；（2）内容丰富信号的模态特异性先验——不同模态（文本、图像、ID）的特征具有不同的统计特性，需要差异化处理。&lt;/p&gt;
+
+&lt;h2&gt;方法：Efficiently Scalable Transformer (EST)&lt;/h2&gt;
+&lt;p&gt;EST实现了完全统一建模——在单一序列中处理所有原始输入，无需有损聚合。核心模块包括：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;轻量级交叉注意力（Lightweight Cross-Attention, LCA）&lt;/strong&gt;：剪枝冗余的自交互，聚焦于高影响力的跨特征依赖关系。这避免了标准自注意力在处理混合模态特征序列时的计算浪费。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;内容稀疏注意力（Content Sparse Attention, CSA）&lt;/strong&gt;：利用内容相似性动态选择高信号行为，而非对所有行为序列进行等权处理。这使得模型能够高效处理超长行为序列。&lt;/p&gt;
+
+&lt;h2&gt;关键结果&lt;/h2&gt;
+&lt;p&gt;EST在淘宝展示广告平台的在线A/B测试中实现了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;RPM（千次展示收入）提升3.27%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CTR提升1.22%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;建立了稳定且高效的幂律缩放关系，使性能提升可随模型规模可预测地增长&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;EST的核心价值在于证明了CTR预测也可以遵循缩放定律——通过统一建模而非有损聚合，模型性能随规模提升呈现稳定的幂律关系。这对工业界的启示是：与其不断设计新的特征交互方式，不如投入资源扩大模型规模和统一建模范式。LCA和CSA的设计为处理混合模态长序列提供了高效方案。&lt;/p&gt;
+
+&lt;p&gt;开放问题：EST的缩放定律在不同广告平台（搜索广告vs展示广告）之间是否具有泛化性？统一建模范式是否能进一步扩展到CVR和多目标预测？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2602.10811"&gt;https://arxiv.org/abs/2602.10811&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">2c8b2dd9-3b59-5740-b835-f7bf6784f272</guid>
+      <pubDate>Fri, 15 May 2026 23:21:12 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2602.10811</link>
+    </item>
+    <item>
+      <title>IDProxy：小红书用多模态LLM解决广告冷启动CTR预测</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;冷启动是广告和推荐系统中最棘手的问题之一。新广告或新内容缺乏用户交互数据，传统的ID embedding无法学习有效的表征，导致CTR预测严重不准。工业界的常见做法是使用内容特征（文本、图像）作为fallback，但这些特征与ID embedding的优化目标不一致，表征空间存在错位。&lt;/p&gt;
+
+&lt;h2&gt;方法：IDProxy&lt;/h2&gt;
+&lt;p&gt;小红书团队提出IDProxy，利用多模态大语言模型（MLLM）为冷启动项目生成代理嵌入（proxy embedding）。核心设计思想是：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. MLLM生成代理嵌入&lt;/strong&gt;：对缺乏交互数据的新项目，利用多模态LLM从丰富的内容信号（标题、描述、图像）中生成高质量的嵌入表征。MLLM的通用语义理解能力使其能够捕捉内容的深层语义。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 与现有ID embedding空间对齐&lt;/strong&gt;：关键创新在于将MLLM生成的代理嵌入显式对齐到现有的ID embedding空间。这意味着代理嵌入不需要从零学习——它继承了已有embedding空间的结构和语义关系。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 端到端联合优化&lt;/strong&gt;：代理嵌入与排序模型在CTR目标下端到端联合优化，而非分阶段训练。这确保了代理嵌入的表征与下游预测任务高度一致。&lt;/p&gt;
+
+&lt;h2&gt;部署与效果&lt;/h2&gt;
+&lt;p&gt;IDProxy已在小红书的Explore Feed内容流和展示广告两条业务线部署，服务&lt;strong&gt;数亿日活用户&lt;/strong&gt;。离线实验和在线A/B测试均验证了方法的有效性。&lt;/p&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;IDProxy的思路对冷启问题提供了一个优雅的解决方案：不是简单地用内容特征替代ID特征，而是让MLLM生成的表征"说同一种语言"——与已有ID embedding空间对齐。这种对齐策略使得冷启动项目能够无缝融入现有的排序管线，无需修改排序模型架构。&lt;/p&gt;
+
+&lt;p&gt;对广告系统的启示：新广告主投放的冷启动广告、季节性商品的首次上线、以及长尾广告创意的CTR预测都可以从类似的方法中受益。端到端联合优化确保了代理嵌入不会在对齐过程中丢失与CTR预测相关的信息。&lt;/p&gt;
+
+&lt;p&gt;开放问题：MLLM生成嵌入的推理延迟如何控制在工业级实时系统可接受的范围内？代理嵌入在warm-up阶段（积累少量交互数据后）如何平滑过渡到真实ID embedding？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2603.01590"&gt;https://arxiv.org/abs/2603.01590&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">f9b71dee-518b-56bd-9030-d9421340d3b5</guid>
+      <pubDate>Fri, 15 May 2026 23:21:12 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2603.01590</link>
+    </item>
+    <item>
+      <title>RQ-GMM：用高斯混合模型+残差量化解决多模态CTR嵌入离散化难题</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;多模态内容（文本、图像、视频）对CTR预测至关重要，但如何将预训练模型生成的连续嵌入（continuous embeddings）有效整合到CTR模型中，是一个长期未解的难题。直接将连续嵌入输入CTR模型效果不佳——预训练目标与CTR优化目标不匹配，导致收敛不一致。业界发现将连续嵌入离散化为语义ID（semantic IDs）更有效，但现有方法存在三个问题：码本利用率低、重建精度不足、语义区分度差。&lt;/p&gt;
+
+&lt;h2&gt;方法：RQ-GMM&lt;/h2&gt;
+&lt;p&gt;RQ-GMM（Residual Quantized Gaussian Mixture Model）引入概率建模来更好地捕获多模态嵌入空间的统计结构。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;核心思想&lt;/strong&gt;：用高斯混合模型（GMM）替代传统的向量量化方法。GMM能够对嵌入空间的概率分布进行建模，每个高斯分量对应一个语义子空间。结合残差量化（Residual Quantization），逐层细化量化误差，实现更精确的嵌入重建。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;与传统方法的区别&lt;/strong&gt;：传统VQ（向量量化）方法如RQ-VAE使用硬聚类，码本中的每个code只负责一个区域，容易导致码本利用率不均（部分code从未被使用）。RQ-GMM通过概率建模，让每个code覆盖一个概率分布区域，自然地提高了码本利用率和语义区分度。&lt;/p&gt;
+
+&lt;h2&gt;部署与效果&lt;/h2&gt;
+&lt;p&gt;RQ-GMM已在某大型短视频平台全量部署，服务&lt;strong&gt;数亿用户的日常推荐&lt;/strong&gt;。在线A/B测试显示：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;广告主价值（Advertiser Value）提升1.502%&lt;/strong&gt;，超越强基线&lt;/li&gt;
+&lt;li&gt;在公共数据集和生产环境A/B测试中均验证了有效性&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;RQ-GMM解决的是多模态CTR系统中一个非常基础但关键的工程问题：如何把来自不同预训练模型的嵌入"翻译"成CTR模型能有效利用的离散表示。1.502%的广告主价值提升看似不大，但这是在一个已经高度优化的生产系统上的增量改进，且方法具有通用性——可以应用于任何需要整合多模态预训练嵌入的场景。&lt;/p&gt;
+
+&lt;p&gt;对实践者的建议：如果你的广告/推荐系统正在使用多模态特征（CLIP嵌入、BERT嵌入等），且直接concatenation效果不理想，可以考虑用RQ-GMM类方法进行离散化预处理。概率量化的优势在于它保留了嵌入空间的分布信息，而不仅仅是几何距离。&lt;/p&gt;
+
+&lt;p&gt;开放问题：RQ-GMM的码本大小如何选择？在嵌入维度非常高（如1024维）的场景下，GMM的拟合效率如何保证？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2602.12593"&gt;https://arxiv.org/abs/2602.12593&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">28803f09-f591-54f9-8911-0c61e073d274</guid>
+      <pubDate>Fri, 15 May 2026 23:22:08 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2602.12593</link>
+    </item>
+    <item>
+      <title>GenCI：用生成式意图建模替代判别式匹配——WWW 2026的CTR新范式</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;当前CTR预测的主流范式是判别式的——将候选广告与用户历史进行匹配打分。但这种范式存在两个根本缺陷：（1）过度拟合历史主导特征——模型倾向于依赖用户过去频繁交互的特征类型，无法捕捉新兴兴趣；（2）逐点排序的信息鸿沟——point-wise ranking忽略了候选之间的上下文关系，长期偏好往往压制了用户的即时演化意图。&lt;/p&gt;
+
+&lt;h2&gt;方法：GenCI&lt;/h2&gt;
+&lt;p&gt;GenCI（Generative Cohort-based Intent）提出了一种生成式用户意图框架，用"主动产生"候选兴趣群组来替代"被动匹配"用户历史。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 生成式意图建模（Generative NTP Objective）&lt;/strong&gt;：通过下一兴趣预测（Next-item Prediction）目标训练生成模型，主动产出候选无关的兴趣群组表征（candidate-agnostic cohort representations）。这些群组代表用户的即时意图，而非对特定候选的偏好。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 层次化候选感知网络（Hierarchical Candidate-Aware Network）&lt;/strong&gt;：在生成意图群组后，通过交叉注意力将群组上下文注入排序过程，将用户意图与目标候选对齐。这实现了从"意图发现"到"意图-候选匹配"的两阶段推理。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 端到端训练&lt;/strong&gt;：整个管线联合优化，确保生成的意图群组与下游CTR预测目标一致。&lt;/p&gt;
+
+&lt;h2&gt;论文地位&lt;/h2&gt;
+&lt;p&gt;GenCI已被&lt;strong&gt;WWW 2026 Research Track&lt;/strong&gt;接收，这是Web领域最顶级的学术会议之一。论文在三个广泛使用的数据集上进行了大规模实验，验证了方法的有效性。&lt;/p&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;GenCI代表了CTR预测范式的一个有趣转向：从"给定候选，预测点击概率"到"先理解用户当前想要什么，再匹配候选"。这种生成式思路与LLM领域的"先理解意图再生成回答"有异曲同工之妙。&lt;/p&gt;
+
+&lt;p&gt;对广告系统的启示：在广告场景中，用户的即时意图往往比长期偏好更能预测点击行为。例如，一个经常购买电子产品的用户在浏览母婴内容时，母婴广告的CTR可能远高于电子产品广告。GenCI的群组意图建模能够捕捉这种上下文切换。&lt;/p&gt;
+
+&lt;p&gt;开放问题：生成式意图建模的计算开销如何？在实时竞价（RTB）的毫秒级延迟约束下是否可行？群组的粒度如何控制——太粗会丢失个性化信号，太细会退化为判别式方法？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2601.18251"&gt;https://arxiv.org/abs/2601.18251&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">fad1667d-51a0-5a57-8ee4-366efe443d86</guid>
+      <pubDate>Fri, 15 May 2026 23:22:08 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2601.18251</link>
+    </item>
+    <item>
+      <title>DMGIN：多模态LLM重组终身行为序列——CTR+4.7%、RPM+2.3%的实战验证</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;终身用户行为序列（lifelong post-click sequences）包含用户数月甚至数年的点击、购买历史，是CTR预测的金矿。但序列越长，计算成本越高。传统两阶段方法（先截断/采样，再建模）不可避免地丢失信息。更关键的是，终身序列中存在大量重复项目（用户反复浏览同类商品），直接建模效率低下。&lt;/p&gt;
+
+&lt;h2&gt;方法：DMGIN&lt;/h2&gt;
+&lt;p&gt;DMGIN（Multimodal LLMs Enhance Large Recommendation Models for Lifelong User Post-click Behaviors）利用多模态大语言模型（MLLM）重组终身行为序列，在几乎不增加计算开销的情况下实现更有效的建模。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;MLLM分组策略&lt;/strong&gt;：观察到终身序列中存在大量重复项目（相同商品不同时间的浏览），DMGIN使用MLLM对这些项目进行语义分组。MLLM的多模态理解能力使其能够识别"同一商品的不同浏览"vs"相似但不同的商品"，分组质量远高于基于ID的简单去重。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;组内分析（Intra-group Analysis）&lt;/strong&gt;：结合兴趣统计特征和组内Transformer，捕获每个兴趣组的群组特征。用户对同一类商品的多次交互包含了重要的偏好信号——浏览频率、时间间隔、转化与否等。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;组间时序建模（Inter-group Temporal Modeling）&lt;/strong&gt;：对按时间排序的兴趣组应用Transformer，建模用户兴趣的演化轨迹。这使得模型能够捕捉"用户从电子产品兴趣转向母婴用品"等长期兴趣迁移。&lt;/p&gt;
+
+&lt;h2&gt;在线效果&lt;/h2&gt;
+&lt;p&gt;DMGIN在LBS广告系统的在线A/B测试中验证了有效性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CTR提升4.7%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;RPM（千次展示收入）提升2.3%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;在工业数据集和公共数据集上均确认了效果和效率&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;DMGIN的核心洞察是：MLLM不应直接嵌入到推荐模型中（计算开销太大），而应作为"序列重组器"——用MLLM的语义理解能力对行为序列进行智能压缩。这种"MLLM预处理+轻量级模型建模"的范式在工业部署中更具可行性。&lt;/p&gt;
+
+&lt;p&gt;对广告系统的启示：终身行为序列是被低估的信号源。大多数系统只使用最近N次行为，但用户的长期行为模式（购买周期、品类偏好迁移）对转化预测至关重要。DMGIN提供了一种高效利用全量行为数据的方案。&lt;/p&gt;
+
+&lt;p&gt;开放问题：MLLM分组的延迟如何控制在可接受范围内？分组策略是否需要针对不同广告品类（搜索广告vs展示广告）进行定制？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2508.21801"&gt;https://arxiv.org/abs/2508.21801&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">7d69a5a1-2ff4-5b26-bf61-34e97ff172ca</guid>
+      <pubDate>Fri, 15 May 2026 23:22:08 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2508.21801</link>
+    </item>
+    <item>
+      <title>CAMoE：Spotify的跨模态自适应MoE——音频广告CTR提升14.5%（KDD 2025）</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;Spotify拥有超过6.75亿月活用户，但其广告系统面临独特挑战：平台以音频为核心，用户在听音乐、播客时接收广告，这与传统的视觉主导广告体验截然不同。Spotify同时运营音频广告、视频广告和展示广告三种模态，每种模态的用户注意力模式、交互行为和转化路径差异巨大。传统为前台视觉体验设计的广告模型难以适应这种多模态音频优先场景。&lt;/p&gt;
+
+&lt;h2&gt;方法：CAMoE&lt;/h2&gt;
+&lt;p&gt;CAMoE（Cross-modal Adaptive Mixture of Experts）通过三个关键技术增强传统MoE架构：&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 模态感知任务分组（Modality-Aware Task Grouping）&lt;/strong&gt;：按内容类型（音频、视频、展示）组织预测任务，而非将所有模态的任务混合在一起。这使得每组专家能够专注于特定模态的特征模式——音频广告的时长、语调、BGM等特征与视频广告的画面、字幕等特征需要不同的建模策略。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 自适应损失掩码（Adaptive Loss Masking）&lt;/strong&gt;：动态调整训练目标的权重，解决不同模态数据量不均衡的问题。音频广告的曝光量通常远低于展示广告，简单的多任务损失会导致模型偏向数据量大的模态。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 深度交叉网络（DCN）&lt;/strong&gt;：捕获多模态广告生态中的复杂特征交互，处理跨模态的协同信号。&lt;/p&gt;
+
+&lt;h2&gt;在线效果&lt;/h2&gt;
+&lt;p&gt;CAMoE在Spotify广告平台全量部署后的A/B测试结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;音频广告CTR提升14.5%&lt;/strong&gt;——这是最显著的改进，因为音频是Spotify的核心场景&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;视频广告CTR提升1.3%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;音频广告eCPC（每次点击有效成本）降低4.8%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;实现了音频、视频、展示三种广告格式的近帕累托最优性能&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;论文已被&lt;strong&gt;KDD 2025&lt;/strong&gt;接收。&lt;/p&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;14.5%的音频广告CTR提升在广告领域是极其显著的改进。这说明在多模态广告场景中，模态感知的模型设计至关重要——不能简单地用一个模型处理所有模态。模态感知任务分组和自适应损失掩码的设计思路对任何运营多格式广告的平台都有借鉴价值。&lt;/p&gt;
+
+&lt;p&gt;对实践者的建议：如果你的平台同时运营多种广告格式（信息流、开屏、搜索、视频），考虑用CAMoE的思路设计模态感知的MoE架构，而非为每种格式训练独立模型或用单一模型处理所有格式。&lt;/p&gt;
+
+&lt;p&gt;开放问题：CAMoE的专家数量和分组策略如何随模态数量扩展？在新广告格式（如AR广告）引入时，如何高效地扩展模型？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2506.18735"&gt;https://arxiv.org/abs/2506.18735&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">8aee66d6-3f88-5d7a-bb67-83d86696edca</guid>
+      <pubDate>Fri, 15 May 2026 23:22:08 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2506.18735</link>
+    </item>
+    <item>
+      <title>MARM：Meta如何用O(1T)参数的自适应排序模型实现Instagram广告CTR+5%、转化+3%</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;Meta的广告排序系统面临一个"推理三难困境"：模型复杂度、延迟和成本之间的矛盾。为了服务数十亿用户，排序模型需要在毫秒级延迟内完成推理，但更大更强的模型需要更多计算资源。传统的统一推理策略——对每个用户-广告对使用相同的模型复杂度——造成了巨大的计算浪费：简单请求（高意图用户的明确搜索）和复杂请求（探索性浏览）使用相同的模型。&lt;/p&gt;
+
+&lt;h2&gt;方法：MARM&lt;/h2&gt;
+&lt;p&gt;MARM（Meta Adaptive Ranking Model）的核心思想是根据请求的复杂度动态调整推理策略，而非一刀切。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 请求导向计算共享（Request-Oriented Computation Sharing）&lt;/strong&gt;：传统模型独立处理每个用户-广告对，造成用户信号的重复计算。MARM将用户信号每请求计算一次，通过内核内广播（In-Kernel Broadcast）在所有候选广告间共享。这将扩展成本从线性降为亚线性。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 请求导向序列扩展&lt;/strong&gt;：通过每请求处理一次长行为序列（而非每候选处理一次），MARM能够使用远超以往长度的用户行为序列，且计算成本可控。集中式KV存储替代了冗余数据复制。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Wukong Turbo运行时&lt;/strong&gt;：在Meta的Wukong架构基础上优化——No-Bias设计移除不稳定项提升吞吐、小参数委托到DDP减少通信开销、基于稀疏性的简化降低冗余计算。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. 选择性FP8量化&lt;/strong&gt;：不做全模型低精度量化，而是通过微基准测试识别对精度损失容忍度高的层，仅在这些层应用FP8后训练量化。在异构硬件上实现吞吐提升，质量损失可忽略。&lt;/p&gt;
+
+&lt;h2&gt;万亿参数规模&lt;/h2&gt;
+&lt;p&gt;MARM达到了&lt;strong&gt;O(1T)参数&lt;/strong&gt;的规模，通过动态分配embedding哈希大小、剪枝未使用embedding、多特征共享统一embedding表等技术，在内存预算内最大化学习容量。多GPU卡embedding分片机制将TB级embedding表分布到优化的硬件集群上。&lt;/p&gt;
+
+&lt;h2&gt;在线效果&lt;/h2&gt;
+&lt;p&gt;MARM于2025年Q4在Instagram上线，针对目标用户的A/B测试结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;广告CTR提升5%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;广告转化提升3%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;模型复杂度相当于每token O(10 GFLOPs)，匹配顶级LLM&lt;/li&gt;
+&lt;li&gt;延迟控制在O(100ms)，比标准LLM推理快一个数量级&lt;/li&gt;
+&lt;li&gt;模型FLOPs利用率达35%&lt;/li&gt;
+&lt;li&gt;模型加载时间控制在10分钟内&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;MARM展示了模型-系统协同设计的巨大价值。不是简单地训练更大的模型然后优化推理，而是从系统架构层面重新思考"如何高效地服务大模型"。请求导向计算共享是最关键的创新——在广告场景中，用户信号对所有候选是相同的，重复计算是纯粹的浪费。&lt;/p&gt;
+
+&lt;p&gt;选择性FP8量化也值得关注：不是所有层都适合低精度量化，精准识别和选择性应用比一刀切更有效。&lt;/p&gt;
+
+&lt;p&gt;开放问题：自适应推理策略的路由决策本身是否有开销？如何避免路由错误（简单请求用了复杂路径或反之）？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://engineering.fb.com/2026/03/31/ml-applications/meta-adaptive-ranking-model-bending-the-inference-scaling-curve-to-serve-llm-scale-models-for-ads/"&gt;https://engineering.fb.com/2026/03/31/ml-applications/meta-adaptive-ranking-model-bending-the-inference-scaling-curve-to-serve-llm-scale-models-for-ads/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">75e5b440-8668-5314-8d94-d1e380a958b3</guid>
+      <pubDate>Fri, 15 May 2026 23:22:56 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://engineering.fb.com/2026/03/31/ml-applications/meta-adaptive-ranking-model-bending-the-inference-scaling-curve-to-serve-llm-scale-models-for-ads/</link>
+    </item>
+    <item>
+      <title>MTMD：Pinterest用一个统一模型替代9个生产广告排序模型——CPC降低2%（AdKDD 2025）</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;Pinterest的广告系统面临一个典型的"碎片化"问题：轻量级排序层（位于检索和精排之间）需要同时处理多个维度的差异——不同的预测任务（CTR用于点击广告、CVR用于转化广告）、不同的广告产品（购物广告、标准广告）、不同的投放面（首页信息流、搜索结果、相关推荐）。每个维度组合都有独立的生产模型，导致系统复杂度爆炸、维护成本高、跨域知识无法共享。&lt;/p&gt;
+
+&lt;h2&gt;方法：MTMD&lt;/h2&gt;
+&lt;p&gt;MTMD（Multi-Task Multi-Domain）框架用一个统一模型替代所有独立模型。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 混合专家架构（Mixture-of-Experts）&lt;/strong&gt;：设计了专门的MoE结构，让专家同时学习领域特化知识和跨领域共享知识。每个专家专注于特定的域-任务组合，同时通过门控机制共享通用模式。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 域自适应模块（Domain Adaptation Module）&lt;/strong&gt;：鼓励专家之间的知识迁移，而非让每个专家独立学习。这对Pinterest的场景尤为重要——购物广告和标准广告虽然目标不同，但用户行为模式存在大量共性。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 任务约束&lt;/strong&gt;：对不同预测任务施加约束，确保多任务学习不会因任务间的冲突而降低性能。CTR和CVR的优化目标有时会冲突（点击率高的广告不一定转化率高），需要显式的约束来协调。&lt;/p&gt;
+
+&lt;h2&gt;在线效果&lt;/h2&gt;
+&lt;p&gt;MTMD在Pinterest广告推荐系统中的部署结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;离线指标：损失值改善12%至36%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;在线指标：CPC（每次点击成本）降低2%&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用一个统一框架替代了9个生产模型&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;论文已被&lt;strong&gt;AdKDD 2025&lt;/strong&gt;接收。&lt;/p&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;MTMD的核心价值不仅是性能提升，更是系统简化。用一个模型替代9个模型意味着：维护成本降低9倍、模型迭代速度提升、跨域知识共享带来持续的增量收益。对中大型广告平台来说，模型碎片化是普遍问题——搜索广告、展示广告、视频广告各有独立模型，MTMD提供了一个经过验证的统一方案。&lt;/p&gt;
+
+&lt;p&gt;MoE架构的关键在于专家的专业化和共享的平衡。MTMD的域自适应模块确保了专家不会过度特化（丧失泛化能力）也不会过度共享（丧失专业能力）。&lt;/p&gt;
+
+&lt;p&gt;开放问题：当新增一个广告域（如新推出的广告产品）时，MTMD如何扩展而不影响已有域的性能？MoE的专家数量和路由策略如何随域数量调整？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2510.09857"&gt;https://arxiv.org/abs/2510.09857&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">49a15b00-4fe9-5f3c-8d18-4c675bfa181f</guid>
+      <pubDate>Fri, 15 May 2026 23:22:56 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2510.09857</link>
+    </item>
+    <item>
+      <title>REA：Meta的自主AI Agent如何将广告排序模型优化效率提升5倍、精度翻倍</title>
+      <description>&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;Meta的广告排序模型优化面临一个根本瓶颈：传统的ML实验流程需要工程师手动提出假设、运行实验、调试失败、迭代改进——每个周期耗时数天到数周。随着模型成熟度提高，找到有意义的改进变得越来越困难，手动、串行的工作方式成为创新瓶颈。Meta每天服务数十亿用户的广告排序系统，需要更快的模型迭代速度。&lt;/p&gt;
+
+&lt;h2&gt;方法：REA&lt;/h2&gt;
+&lt;p&gt;REA（Ranking Engineer Agent）是一个自主AI Agent，能够管理端到端的ML实验生命周期，从假设生成到实验执行、结果分析、下一步决策，几乎不需要人工干预。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 长期异步工作流自主性&lt;/strong&gt;：ML训练任务运行数小时甚至数天。REA通过休眠-唤醒机制（hibernate-and-wake）维持跨多轮工作流的持久状态和记忆。当训练任务启动时，REA将等待委托给后台系统，关闭自身以节省资源，任务完成后自动恢复。基于Meta内部的Confucius AI Agent框架构建。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 双源假设引擎（Dual-Source Hypothesis Engine）&lt;/strong&gt;：从两个互补来源生成高质量、多样化的假设——历史洞察数据库（过往实验的模式识别）和ML研究Agent（基于最新研究提出新颖优化策略）。REA最有影响力的改进来自架构优化与训练效率技术的跨系统组合。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 三阶段规划框架&lt;/strong&gt;：验证阶段（并行测试单个假设）→ 组合阶段（组合有前景的假设寻找协同效应）→ 利用阶段（在批准的计算预算内激进探索最优候选）。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. 韧性执行&lt;/strong&gt;：自主适应基础设施故障、意外错误和计算预算限制。咨询常见故障模式的runbook，做出优先级决策（排除OOM错误或loss爆炸的任务），从第一性原理调试基础设施故障。&lt;/p&gt;
+
+&lt;h2&gt;知识累积飞轮&lt;/h2&gt;
+&lt;p&gt;REA最强大的设计是知识反馈循环：实验执行器完成实验后，结果反馈到假设数据库，使生成器能够识别模式、学习成功和失败的经验、提出越来越复杂的假设。这种累积效应使REA随时间变得越来越强。&lt;/p&gt;
+
+&lt;h2&gt;效果&lt;/h2&gt;
+&lt;p&gt;在首批生产验证中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;模型精度翻倍&lt;/strong&gt;：REA驱动的迭代在6个模型上将平均模型精度提升至基线方法的2倍&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;工程效率提升5倍&lt;/strong&gt;：早期使用者在相同时间内将模型改进提案从1个提升到5个&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;人力重新分配&lt;/strong&gt;：原本需要2名工程师负责1个模型的工作，现在3名工程师可以负责8个模型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;实践启示&lt;/h2&gt;
+&lt;p&gt;REA代表了ML工程的范式转变：从"工程师做实验"到"工程师指导Agent做实验"。人类专注于战略决策和架构方向，Agent处理迭代执行的繁重工作。这种模式对所有运营大规模ML系统的团队都有启发——当模型成熟度提高、改进空间收窄时，自动化的假设生成和实验执行能够显著加速创新。&lt;/p&gt;
+
+&lt;p&gt;知识累积飞轮是最值得关注的设计：每个实验的结果都被系统性地记录和利用，避免了团队知识随人员流动而流失的问题。&lt;/p&gt;
+
+&lt;p&gt;开放问题：REA的假设质量如何保证？是否会出现"过度优化"——Agent找到了在评估指标上有效但实际业务价值有限的改进？Agent的决策边界和人工审核机制如何设计？&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://engineering.fb.com/2026/03/17/developer-tools/ranking-engineer-agent-rea-autonomous-ai-system-accelerating-meta-ads-ranking-innovation/"&gt;https://engineering.fb.com/2026/03/17/developer-tools/ranking-engineer-agent-rea-autonomous-ai-system-accelerating-meta-ads-ranking-innovation/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">f17dd768-d3c9-5ed6-8251-97d6ecdb668d</guid>
+      <pubDate>Fri, 15 May 2026 23:22:56 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://engineering.fb.com/2026/03/17/developer-tools/ranking-engineer-agent-rea-autonomous-ai-system-accelerating-meta-ads-ranking-innovation/</link>
     </item>
   </channel>
 </rss>
