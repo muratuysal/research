@@ -4,7 +4,7 @@
     <title>Ad ML Research Feed</title>
     <description>Deep research on ad CTR/CVR models, A/B testing, and online optimization</description>
     <link>https://muratuysal.github.io/research/ad-ml-research.xml</link>
-    <lastBuildDate>Fri, 15 May 2026 23:22:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 00:03:06 +0000</lastBuildDate>
     <generator>cc-deepfeed</generator>
     <ns0:link rel="hub" href="https://pubsubhubbub.appspot.com" />
     <ns0:link rel="self" href="https://muratuysal.github.io/research/ad-ml-research.xml" type="application/rss+xml" />
@@ -574,6 +574,865 @@
       <pubDate>Fri, 15 May 2026 23:22:56 +0000</pubDate>
       <category>ad-ml-optimization</category>
       <link>https://engineering.fb.com/2026/03/17/developer-tools/ranking-engineer-agent-rea-autonomous-ai-system-accelerating-meta-ads-ranking-innovation/</link>
+    </item>
+    <item>
+      <title>DiffBid：阿里巴巴用扩散模型重新定义自动出价——GMV+2.81%、ROI+3.36%的在线验证</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; 阿里巴巴提出AIGB（AI-Generated Bidding）范式，用条件扩散模型DiffBid直接生成完整出价轨迹，替代传统RL逐步决策。在线A/B测试显示GMV提升2.81%、ROI提升3.36%，误差传播问题被彻底消除。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;传统自动出价系统基于强化学习（RL），在每个时间步独立决策出价金额。但这种方法面临一个根本性缺陷：&lt;strong&gt;误差传播&lt;/strong&gt;。在长周期预算分配场景中，早期决策的微小误差会在后续步骤中累积放大，导致最终预算分配严重偏离最优。此外，RL方法需要大量在线交互数据进行训练，样本效率低下。&lt;/p&gt;
+
+&lt;h2&gt;核心创新：从逐步决策到轨迹生成&lt;/h2&gt;
+&lt;p&gt;DiffBid的核心洞察是：&lt;strong&gt;将出价问题重新定义为条件生成任务&lt;/strong&gt;。不是逐步决定每次出价多少，而是将广告主的预算约束、ROI目标和历史竞价数据作为条件，直接生成整个投放周期的出价轨迹。&lt;/p&gt;
+
+&lt;p&gt;具体技术细节：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;条件扩散模型&lt;/strong&gt;：以广告主属性（预算、ROI目标、历史表现）为条件，通过扩散过程生成出价轨迹&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;轨迹级优化&lt;/strong&gt;：直接建模回报与整个轨迹的关联，避免逐步决策的误差累积&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;去噪过程&lt;/strong&gt;：从随机噪声开始，逐步去噪生成符合约束的出价序列&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;在线A/B测试结果&lt;/h2&gt;
+&lt;p&gt;在阿里巴巴广告平台的大规模在线实验中，DiffBid相比强基线取得显著提升：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GMV提升2.81%&lt;/strong&gt;：总成交额显著增长&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ROI提升3.36%&lt;/strong&gt;：投资回报率同步改善&lt;/li&gt;
+&lt;li&gt;误差传播问题被完全消除，因为模型一次性生成完整轨迹&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;值得注意的是，这些结果是在&lt;strong&gt;已有较强RL基线&lt;/strong&gt;的生产系统上取得的增量提升，说明生成式方法确实能捕捉到RL遗漏的优化空间。&lt;/p&gt;
+
+&lt;h2&gt;范式转变的意义&lt;/h2&gt;
+&lt;p&gt;DiffBid代表了自动出价领域的&lt;strong&gt;范式转变&lt;/strong&gt;：从"智能体在环境中学习"转变为"生成模型直接合成最优策略"。这种方法有几个关键优势：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;避免探索开销&lt;/strong&gt;：不需要在线探索，直接从历史数据学习最优轨迹分布&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;约束满足&lt;/strong&gt;：预算和ROI约束可以通过条件生成自然满足，无需复杂的约束处理机制&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;泛化能力&lt;/strong&gt;：扩散模型可以泛化到未见过的广告主类型&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;后续发展&lt;/h2&gt;
+&lt;p&gt;DiffBid开启了生成式自动出价的新方向。2025年已有多项后续工作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CBD&lt;/strong&gt;（Li et al.）：在稀疏奖励场景下转化价值提升29.9%&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SEGB&lt;/strong&gt;（Gao et al.）：自演化生成出价，目标成本提升10.19%&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;AHBid&lt;/strong&gt;（Yang et al.）：跨渠道分层出价，整体回报提升13.57%（WWW 2026）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;如果你的自动出价系统仍然基于逐步RL，现在是认真评估生成式方法的时候了。扩散模型在出价领域的成功，与它在机器人运动规划、蛋白质设计等领域的成功一脉相承——&lt;strong&gt;将序列决策问题转化为轨迹生成问题&lt;/strong&gt;。阿里巴巴、快手、美团等平台的实际部署结果表明，这不是实验室玩具，而是可以带来显著业务提升的实用技术。&lt;/p&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Alibaba proposes the AIGB (AI-Generated Bidding) paradigm, using conditional diffusion model DiffBid to directly generate complete bidding trajectories, replacing traditional step-by-step RL decisions. Online A/B tests show +2.81% GMV and +3.36% ROI, with error propagation completely eliminated.&lt;/p&gt;
+
+&lt;h2&gt;Problem Context&lt;/h2&gt;
+&lt;p&gt;Traditional auto-bidding systems based on reinforcement learning (RL) make independent bid decisions at each time step. This approach has a fundamental flaw: &lt;strong&gt;error propagation&lt;/strong&gt;. In long-horizon budget allocation scenarios, small errors in early decisions accumulate and amplify in subsequent steps, causing final budget allocation to deviate significantly from optimal.&lt;/p&gt;
+
+&lt;h2&gt;Core Innovation: From Step-by-Step to Trajectory Generation&lt;/h2&gt;
+&lt;p&gt;DiffBid's key insight is &lt;strong&gt;reframing bidding as a conditional generation task&lt;/strong&gt;. Instead of deciding how much to bid step by step, it takes advertiser budget constraints, ROI targets, and historical bidding data as conditions to directly generate bidding trajectories for the entire delivery period.&lt;/p&gt;
+
+&lt;h2&gt;Online A/B Test Results&lt;/h2&gt;
+&lt;p&gt;In large-scale online experiments on Alibaba's advertising platform, DiffBid achieved significant improvements over strong baselines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;+2.81% GMV&lt;/strong&gt;: Significant growth in total transaction volume&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;+3.36% ROI&lt;/strong&gt;: Return on investment improved simultaneously&lt;/li&gt;
+&lt;li&gt;Error propagation completely eliminated as the model generates complete trajectories at once&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;If your auto-bidding system still relies on step-by-step RL, it's time to seriously evaluate generative approaches. The success of diffusion models in bidding parallels their success in robot motion planning and protein design — &lt;strong&gt;transforming sequential decision problems into trajectory generation problems&lt;/strong&gt;. Deployment results from Alibaba, Kuaishou, and Meituan confirm this is not a lab toy but practical technology delivering significant business improvements.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2405.16141"&gt;https://arxiv.org/abs/2405.16141&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">ad33c544-80bc-5a32-ae6b-2fb71b61adcb</guid>
+      <pubDate>Fri, 15 May 2026 23:59:33 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2405.16141</link>
+    </item>
+    <item>
+      <title>CUPED+截断均值：解决广告实验重尾指标方差缩减的新方法（2025）</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Charette &amp; Boudreault（2025）将CUPED方差缩减与Yuen's t-test（截断均值）结合，解决了广告实验中常见的零膨胀和重尾指标问题。传统CUPED对高度偏斜指标"力不从心"，新方法在更小样本量下实现更灵敏的检测。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;CUPED（Controlled-experiment Using Pre-Experiment Data）是2013年微软提出的方差缩减技术，利用实验前数据降低A/B测试指标方差，通常可实现&lt;strong&gt;20-50%的方差缩减&lt;/strong&gt;。但在广告实验中，许多关键指标（如单用户收入、转化率）具有&lt;strong&gt;零膨胀&lt;/strong&gt;和&lt;strong&gt;重尾&lt;/strong&gt;特性——大量用户零消费，少数用户高额消费。传统CUPED对这类指标效果有限。&lt;/p&gt;
+
+&lt;h2&gt;核心创新：CUPED + 截断均值&lt;/h2&gt;
+&lt;p&gt;论文提出将CUPED与Yuen's t-test结合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;截断均值（Trimmed Mean）&lt;/strong&gt;：去除两端极端值后计算均值，对异常值鲁棒&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUPED调整&lt;/strong&gt;：在截断均值基础上应用CUPED的协变量调整&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;组合优势&lt;/strong&gt;：既处理了重尾分布，又利用了实验前数据的预测能力&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;为什么这对广告实验重要&lt;/h2&gt;
+&lt;p&gt;广告实验的核心挑战在于指标分布的高度非正态性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;零膨胀&lt;/strong&gt;：大多数用户不会点击/转化，导致分布在零点有巨大概率质量&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重尾&lt;/strong&gt;：少数高价值用户贡献大量收入，导致分布有长右尾&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;传统t检验失效&lt;/strong&gt;：Gong et al.（2025）发现，某些在线指标需要"数亿样本"才能维持传统t检验的有效推断&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;截断均值通过去除极端值，使分布更接近正态，从而让CUPED的线性调整假设更合理。&lt;/p&gt;
+
+&lt;h2&gt;实际影响&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;对&lt;strong&gt;广告收入指标&lt;/strong&gt;（ARPU、RPM）特别有效，因为这些指标天然具有零膨胀+重尾特性&lt;/li&gt;
+&lt;li&gt;可以在&lt;strong&gt;更短实验周期&lt;/strong&gt;内检测到同等效应量，加速实验迭代&lt;/li&gt;
+&lt;li&gt;与现有CUPED基础设施兼容，只需在分析阶段添加截断步骤&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;相关进展&lt;/h2&gt;
+&lt;p&gt;2025-2026年方差缩减领域有多项重要进展：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lin &amp; Crespo（CLeaR 2026）&lt;/strong&gt;：结合实验前和实验中数据，在Etsy的在线实验中实现"显著的额外方差缩减"&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Zhang et al.（ByteDance）&lt;/strong&gt;：统一控制变量和回归调整，在字节跳动实验平台全面部署&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Min et al.（快手）&lt;/strong&gt;：解决社交平台网络干扰问题，在快手数亿用户上验证CUPAC估计器&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;如果你的A/B测试平台仍然只使用标准CUPED，现在是升级的时候了。对于广告实验中常见的重尾指标，&lt;strong&gt;CUPED + 截断均值&lt;/strong&gt;是一个低风险、高回报的改进——不需要改变实验设计，只需调整分析方法。建议先在历史实验数据上回测，量化方差缩减的增量收益。&lt;/p&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Charette &amp; Boudreault (2025) combine CUPED variance reduction with Yuen's t-test (trimmed means) to address zero-inflated and heavy-tailed metrics common in advertising experiments. Traditional CUPED is "insufficient for highly skewed metrics"; the new approach enables more sensitive detection with smaller sample sizes.&lt;/p&gt;
+
+&lt;h2&gt;Problem Context&lt;/h2&gt;
+&lt;p&gt;CUPED (Controlled-experiment Using Pre-Experiment Data) is a variance reduction technique from Microsoft (2013) that uses pre-experiment data to reduce A/B test metric variance, typically achieving &lt;strong&gt;20-50% variance reduction&lt;/strong&gt;. However, many key advertising metrics (revenue per user, conversion rates) have &lt;strong&gt;zero-inflated&lt;/strong&gt; and &lt;strong&gt;heavy-tailed&lt;/strong&gt; characteristics — most users have zero spend while a few users contribute heavily. Traditional CUPED has limited effectiveness on such metrics.&lt;/p&gt;
+
+&lt;h2&gt;Core Innovation: CUPED + Trimmed Means&lt;/h2&gt;
+&lt;p&gt;The paper combines CUPED with Yuen's t-test:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Trimmed Mean&lt;/strong&gt;: Removes extreme values from both tails before computing the mean, robust to outliers&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CUPED Adjustment&lt;/strong&gt;: Applies CUPED's covariate adjustment on top of trimmed means&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Combined Advantage&lt;/strong&gt;: Handles heavy tails while leveraging pre-experiment data predictive power&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Practical Impact&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Particularly effective for &lt;strong&gt;ad revenue metrics&lt;/strong&gt; (ARPU, RPM) that naturally have zero-inflated + heavy-tailed distributions&lt;/li&gt;
+&lt;li&gt;Can detect equivalent effect sizes in &lt;strong&gt;shorter experiment periods&lt;/strong&gt;, accelerating iteration&lt;/li&gt;
+&lt;li&gt;Compatible with existing CUPED infrastructure — only needs a trimming step in the analysis phase&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;If your A/B testing platform still uses only standard CUPED, it's time to upgrade. For heavy-tailed metrics common in advertising experiments, &lt;strong&gt;CUPED + trimmed means&lt;/strong&gt; is a low-risk, high-reward improvement — no experiment design changes needed, only analysis method adjustments. Recommend backtesting on historical experiment data first to quantify incremental variance reduction benefits.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2510.03468"&gt;https://arxiv.org/abs/2510.03468&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">15755e04-1fd5-575d-8174-8ab13ad455f9</guid>
+      <pubDate>Sat, 16 May 2026 00:00:01 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2510.03468</link>
+    </item>
+    <item>
+      <title>AdFL：浏览器内联邦学习实现隐私保护广告ML——92.59% AUC无需SDK</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; AdFL（Alemari et al., 2026）提出浏览器内联邦学习框架，无需安装客户端即可在浏览器中训练广告偏好模型。广告可见性预测达到92.59% AUC，差分隐私保护下性能仅有温和下降。这是首个纯浏览器端的广告FL方案。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;隐私法规（GDPR、CCPA）和浏览器隐私策略（第三方Cookie淘汰）使传统的用户级数据收集越来越困难。联邦学习（FL）提供了一种"数据不出端"的替代方案，但现有FL广告系统通常需要专用客户端SDK，增加了部署复杂度和用户摩擦。&lt;/p&gt;
+
+&lt;h2&gt;核心创新：浏览器即训练平台&lt;/h2&gt;
+&lt;p&gt;AdFL的关键创新是&lt;strong&gt;利用标准浏览器API（Web Workers、IndexedDB、Web Crypto）&lt;/strong&gt;在浏览器内完成FL训练的全部流程：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;零安装&lt;/strong&gt;：不需要用户安装任何扩展或SDK，仅依赖浏览器原生能力&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;毫秒级捕获&lt;/strong&gt;：在浏览器内捕获训练信息，延迟在毫秒级别&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;本地差分隐私&lt;/strong&gt;：在上传模型更新前应用差分隐私噪声，保护用户数据&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;92.59% AUC&lt;/strong&gt;：广告可见性预测任务上达到高精度&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;技术架构&lt;/h2&gt;
+&lt;p&gt;AdFL的架构分为三层：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;数据层&lt;/strong&gt;：在浏览器内收集用户与广告的交互信号（停留时间、滚动深度、可见性）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;训练层&lt;/strong&gt;：使用Web Workers在后台线程执行模型训练，不阻塞UI&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;通信层&lt;/strong&gt;：通过Web Crypto API加密模型更新，安全上传到服务器&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;隐私保证&lt;/h2&gt;
+&lt;p&gt;论文评估了差分隐私对模型性能的影响：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在合理的隐私预算（ε）下，AUC仅有&lt;strong&gt;温和下降&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;本地差分隐私确保单个用户的数据永远不会以原始形式离开设备&lt;/li&gt;
+&lt;li&gt;聚合后的模型更新满足差分隐私保证&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;与Google Privacy Sandbox的关系&lt;/h2&gt;
+&lt;p&gt;值得注意的是，Google在2025年10月宣布&lt;strong&gt;淘汰大部分Privacy Sandbox广告API&lt;/strong&gt;（Topics、Protected Audience、Attribution Reporting等）。AdFL代表了一种替代路径：不依赖平台提供的隐私API，而是直接在浏览器中构建隐私保护的ML系统。&lt;/p&gt;
+
+&lt;h2&gt;相关工作&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;FedCCTR-LM&lt;/strong&gt;（Qin et al., 2025）：用LLM增强跨域联邦CTR预测，结合自适应本地差分隐私&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FedMM&lt;/strong&gt;（Zhang et al., 2026）：联邦多市场CTR预测与信号量化&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;边缘认知队列&lt;/strong&gt;（Kumararaja et al., 2025）：零售场景中FL+隐私保护算法实现CTR提升38%&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;AdFL展示了一种&lt;strong&gt;无需SDK的隐私保护广告ML方案&lt;/strong&gt;。在Privacy Sandbox被废弃、第三方Cookie仍存活的过渡期，浏览器端FL可能成为广告技术栈的重要组成部分。对于拥有大量Web流量的广告平台，值得评估在浏览器中部署FL训练的可行性和收益。&lt;/p&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; AdFL (Alemari et al., 2026) proposes an in-browser federated learning framework that trains ad preference models without client installation. Ad viewability prediction achieves 92.59% AUC with only modest performance decline under differential privacy. This is the first purely browser-side ad FL solution.&lt;/p&gt;
+
+&lt;h2&gt;Core Innovation: Browser as Training Platform&lt;/h2&gt;
+&lt;p&gt;AdFL's key innovation is &lt;strong&gt;using standard browser APIs (Web Workers, IndexedDB, Web Crypto)&lt;/strong&gt; to complete the entire FL training pipeline within the browser:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Zero installation&lt;/strong&gt;: No extensions or SDKs needed, relying only on native browser capabilities&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Millisecond-level capture&lt;/strong&gt;: Training information captured in-browser with millisecond latency&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local differential privacy&lt;/strong&gt;: DP noise applied before uploading model updates&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;92.59% AUC&lt;/strong&gt;: High accuracy on ad viewability prediction&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;AdFL demonstrates a &lt;strong&gt;privacy-preserving ad ML approach without SDKs&lt;/strong&gt;. In the transition period where Privacy Sandbox is deprecated but third-party cookies still survive, browser-side FL could become an important component of the ad tech stack. For platforms with significant web traffic, it's worth evaluating the feasibility and benefits of deploying FL training in the browser.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2602.06336"&gt;https://arxiv.org/abs/2602.06336&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">848527ec-baf5-5920-83ed-eb65506d3b5e</guid>
+      <pubDate>Sat, 16 May 2026 00:00:42 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2602.06336</link>
+    </item>
+    <item>
+      <title>Blind Targeting：差分隐私下广告定向达到非隐私97-101%效果——1400万用户验证</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Shchetkina（2025）提出Blind Targeting框架，在严格差分隐私约束下实现广告个性化。在Criteo 1400万用户数据集上，朴素DP策略仅能达到非隐私定位33%的效果，而Blind Targeting恢复到&lt;strong&gt;97-101%&lt;/strong&gt;，与非隐私SOTA（Causal Forest）统计不可区分。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;隐私法规和Cookie淘汰使广告定向面临根本性挑战。在差分隐私（DP）约束下进行广告个性化，朴素方法会损失大量信号——Shchetkina的实验显示，直接在DP噪声下定位只能达到非隐私方案&lt;strong&gt;33%的效果&lt;/strong&gt;。这意味着在严格隐私保护下，广告主可能损失67%的投放效率。&lt;/p&gt;
+
+&lt;h2&gt;核心方法：贝叶斯优化+积分后验更新&lt;/h2&gt;
+&lt;p&gt;Blind Targeting的技术框架包含几个关键组件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;贝叶斯优化&lt;/strong&gt;：将广告定向建模为黑盒优化问题，用贝叶斯方法在噪声观测下学习最优策略&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;积分后验更新&lt;/strong&gt;：不依赖点估计，而是对整个后验分布进行积分，自然处理DP噪声的不确定性&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;批量适应&lt;/strong&gt;：支持批量更新，适应大规模用户群体&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;关键实验结果&lt;/h2&gt;
+&lt;p&gt;在Criteo数据集（1400万用户）上的实验：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;朴素DP策略&lt;/strong&gt;：仅达到非隐私定位33%的效果&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Blind Targeting&lt;/strong&gt;：达到&lt;strong&gt;97-101%&lt;/strong&gt;的效果&lt;/li&gt;
+&lt;li&gt;与Causal Forest（非隐私SOTA）&lt;strong&gt;统计不可区分&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;在严格DP约束下几乎无性能损失&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;为什么这个结果重要&lt;/h2&gt;
+&lt;p&gt;97-101%的恢复率意味着：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;隐私不是效率的敌人&lt;/strong&gt;：正确的算法设计可以在保护隐私的同时维持投放效果&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;行业可行性&lt;/strong&gt;：为"隐私优先"广告技术提供了实际可行的算法基础&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;监管对冲&lt;/strong&gt;：随着隐私法规收紧，具备DP能力的广告系统将具有竞争优势&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;相关隐私保护广告技术进展&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;数据洁净室CVR预测&lt;/strong&gt;（Li et al., RecSys 2024）：在数据洁净室中用批次级聚合梯度训练CVR模型，避免样本级数据共享&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;隐私保护离线RL&lt;/strong&gt;（Sharma et al., 2025）：基于共识的专家级差分隐私，适用于广告场景中专家选择数据敏感的情况&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SKAdNetwork扩展&lt;/strong&gt;（Yi, 2026）：在联邦学习和DP范式下扩展SKAdNetwork进行跨渠道归因&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Google Privacy Sandbox的废弃&lt;/h2&gt;
+&lt;p&gt;2025年10月，Google宣布废弃Topics API、Protected Audience API、Attribution Reporting API等大部分隐私沙箱广告API。这使Blind Targeting这类&lt;strong&gt;算法层面的隐私保护方案&lt;/strong&gt;更加重要——不再依赖平台API，而是从算法层面保证隐私。&lt;/p&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;Blind Targeting证明了&lt;strong&gt;差分隐私广告定向的实用性&lt;/strong&gt;。对于需要在隐私合规前提下维持广告效果的平台，这是目前最令人信服的学术证据之一。建议在自有数据上复现实验，评估在实际广告场景中的效果衰减情况。&lt;/p&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Shchetkina (2025) proposes Blind Targeting, achieving ad personalization under strict differential privacy constraints. On Criteo's 14M-user dataset, naive DP achieves only 33% of non-private targeting effectiveness, while Blind Targeting recovers &lt;strong&gt;97-101%&lt;/strong&gt;, statistically indistinguishable from non-private SOTA (Causal Forest).&lt;/p&gt;
+
+&lt;h2&gt;Core Method: Bayesian Optimization + Integral Posterior Updating&lt;/h2&gt;
+&lt;p&gt;Blind Targeting's technical framework includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Bayesian optimization&lt;/strong&gt;: Models ad targeting as a black-box optimization problem&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integral posterior updating&lt;/strong&gt;: Integrates over the entire posterior distribution, naturally handling DP noise uncertainty&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Batch adaptation&lt;/strong&gt;: Supports batch updates for large-scale user populations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Key Results&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Naive DP strategy&lt;/strong&gt;: Only 33% of non-private targeting effectiveness&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Blind Targeting&lt;/strong&gt;: &lt;strong&gt;97-101%&lt;/strong&gt; effectiveness recovery&lt;/li&gt;
+&lt;li&gt;Statistically indistinguishable from Causal Forest (non-private SOTA)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;Blind Targeting demonstrates the &lt;strong&gt;practicality of differential privacy ad targeting&lt;/strong&gt;. For platforms needing to maintain ad effectiveness under privacy compliance, this is one of the most compelling academic evidence to date. Recommend reproducing the experiment on proprietary data to evaluate effectiveness decay in real ad scenarios.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2507.05175"&gt;https://arxiv.org/abs/2507.05175&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">3fd7513b-986f-52e4-8c9d-ecc59fb9f89f</guid>
+      <pubDate>Sat, 16 May 2026 00:00:42 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2507.05175</link>
+    </item>
+    <item>
+      <title>ShadowBot：CTV广告欺诈僵尸网络月伪造2亿+展示——预竞价防护可降12倍欺诈率</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; DoubleVerify Fraud Lab在2025年发现ShadowBot——一个针对CTV和移动端的广告欺诈僵尸网络。该方案通过伪造设备签名和应用ID生成虚假广告展示，月均伪造&lt;strong&gt;2亿+&lt;/strong&gt;虚假展示，累计产生&lt;strong&gt;16亿+&lt;/strong&gt;欺诈展示，估计对未保护广告主造成数百万美元损失。&lt;/p&gt;
+
+&lt;h2&gt;欺诈机制&lt;/h2&gt;
+&lt;p&gt;ShadowBot的技术架构展示了现代广告欺诈的复杂性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;设备签名伪造&lt;/strong&gt;：生成虚假的移动设备指纹，模拟真实用户设备&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;应用ID欺骗&lt;/strong&gt;：伪造应用标识，将欺诈流量伪装成来自合法应用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自适应进化&lt;/strong&gt;：早期版本曾伪造CRT电视分辨率（明显的欺诈信号），2025年进化为模拟现代设备配置，"可能借助AI实现自适应模式"&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;规模化运营&lt;/strong&gt;：初期每天产生300万+虚假设备签名，后期扩展到月均2亿+虚假展示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;CTV欺诈的特殊性&lt;/h2&gt;
+&lt;p&gt;为什么CTV（Connected TV）成为欺诈重灾区？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;高CPM&lt;/strong&gt;：CTV广告CPM可达50美元甚至更高，欺诈回报率极高&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;归因困难&lt;/strong&gt;：CTV展示难以像移动端那样直接归因到转化&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;设备多样性&lt;/strong&gt;：CTV设备型号繁多，伪造设备指纹更容易混入&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;缺乏标准化验证&lt;/strong&gt;：CTV广告验证标准仍在发展中&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;预竞价防护的效果&lt;/h2&gt;
+&lt;p&gt;DoubleVerify的数据表明，启用预竞价SIVT（Sophisticated Invalid Traffic）防护后，CTV欺诈率可降低&lt;strong&gt;12倍&lt;/strong&gt;。这意味着：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;预竞价过滤是CTV广告安全的第一道防线&lt;/li&gt;
+&lt;li&gt;仅依赖后竞价检测（如MRC认证的IVT检测）远远不够&lt;/li&gt;
+&lt;li&gt;广告主应要求DSP提供预竞价欺诈过滤能力&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;50+僵尸网络攻击&lt;/h2&gt;
+&lt;p&gt;ShadowBot仅是DoubleVerify在2025年发现的&lt;strong&gt;50+僵尸网络攻击和变种&lt;/strong&gt;之一。大多数攻击针对流媒体格式，特别是CTV。这说明：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;广告欺诈不是单一问题，而是持续的&lt;strong&gt;军备竞赛&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;每个被发现的欺诈方案都会快速变异&lt;/li&gt;
+&lt;li&gt;需要持续的威胁情报和检测能力更新&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;行业影响&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;流媒体广告支出错位&lt;/strong&gt;：约15%的流媒体电视展示落在非优质环境中，估计全球&lt;strong&gt;40亿美元&lt;/strong&gt;支出错位&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;欺诈损失预测&lt;/strong&gt;：Juniper Research预测到2028年广告技术欺诈损失将超过&lt;strong&gt;1700亿美元&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;犯罪利润排名&lt;/strong&gt;：世界广告主联盟将广告欺诈列为仅次于毒品走私的&lt;strong&gt;第二高利润犯罪形式&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;对于投放CTV广告的品牌，&lt;strong&gt;预竞价欺诈过滤是必须的&lt;/strong&gt;。建议：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;要求DSP/SSP展示其预竞价SIVT检测能力&lt;/li&gt;
+&lt;li&gt;使用独立验证提供商（如DoubleVerify、IAS、HUMAN）进行第三方验证&lt;/li&gt;
+&lt;li&gt;监控异常指标：设备签名分布、流量时间模式、应用ID一致性&lt;/li&gt;
+&lt;li&gt;对CTV库存实施更严格的供应链透明度要求（ads.txt、sellers.json）&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; DoubleVerify Fraud Lab discovered ShadowBot in 2025 — an ad fraud botnet targeting CTV and mobile. It generates falsified ad impressions by spoofing device signatures and app IDs, producing &lt;strong&gt;200M+ monthly&lt;/strong&gt; fake impressions, totaling &lt;strong&gt;1.6B+ fraudulent impressions&lt;/strong&gt;, costing unprotected advertisers millions.&lt;/p&gt;
+
+&lt;h2&gt;Fraud Mechanism&lt;/h2&gt;
+&lt;p&gt;ShadowBot's technical architecture demonstrates modern ad fraud complexity:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Device signature spoofing&lt;/strong&gt;: Generates fake mobile device fingerprints mimicking real users&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;App ID spoofing&lt;/strong&gt;: Disguises fraud traffic as coming from legitimate apps&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Adaptive evolution&lt;/strong&gt;: Early versions spoofed CRT TV resolutions (obvious fraud signal); 2025 versions mimic modern device profiles with "adaptive patterns, likely aided by AI"&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scale&lt;/strong&gt;: Initially 3M+ fake device signatures daily, scaling to 200M+ monthly fake impressions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Pre-Bid Protection Impact&lt;/h2&gt;
+&lt;p&gt;DoubleVerify data shows CTV fraud rates can be &lt;strong&gt;12x lower&lt;/strong&gt; with pre-bid SIVT protections enabled. This means pre-bid filtering is the first line of defense for CTV ad safety.&lt;/p&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;For brands running CTV ads, &lt;strong&gt;pre-bid fraud filtering is essential&lt;/strong&gt;. Require DSPs to demonstrate pre-bid SIVT detection capabilities, use independent verification providers, and monitor anomalous signals like device signature distributions and traffic timing patterns.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://doubleverify.com/blog/ctv/verify/theyre-back-fraudsters-are-trying-to-expand-their-ctv-and-mobile-ad-bot-schemes"&gt;https://doubleverify.com/blog/ctv/verify/theyre-back-fraudsters-are-trying-to-expand-their-ctv-and-mobile-ad-bot-schemes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">56ec2001-b164-58cd-9867-ac400fc5c963</guid>
+      <pubDate>Sat, 16 May 2026 00:01:28 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://doubleverify.com/blog/ctv/verify/theyre-back-fraudsters-are-trying-to-expand-their-ctv-and-mobile-ad-bot-schemes</link>
+    </item>
+    <item>
+      <title>AutoBait：200+个AI生成MFA网站组成的广告欺诈网络——每页成本不到2.25美元</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; DoubleVerify在2026年初揭露AutoBait——一个由&lt;strong&gt;200+个MFA（Made for Advertising）域名&lt;/strong&gt;组成的AI内容工厂网络。所有站点共享由LLM和flux-1.1-pro图像模型生成的相同文章和图片，每页成本不到2.25美元，产生数千万虚假展示。&lt;/p&gt;
+
+&lt;h2&gt;AI驱动的欺诈新模式&lt;/h2&gt;
+&lt;p&gt;AutoBait代表了广告欺诈的&lt;strong&gt;新范式&lt;/strong&gt;——利用生成式AI大规模制造看似真实的网站内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;200+ MFA域名&lt;/strong&gt;：伪装成独立生活方式博客的网站网络&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;高端LLM生成文章&lt;/strong&gt;：使用模板化提示词，内容针对心理学优化——前置耸人听闻的观点，注入"真实情感（恐惧、愤怒、震惊、宽慰）"&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;flux-1.1-pro图像模型&lt;/strong&gt;：生成看起来"非人工、非风格化、非AI生成"的图片&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;极低成本&lt;/strong&gt;：每56页幻灯片内容成本不到2.25美元&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;规模化运营&lt;/strong&gt;：产生数千万广告展示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;技术细节：暴露的提示词工程&lt;/h2&gt;
+&lt;p&gt;DoubleVerify的调查发现，运营者在其网站JavaScript中&lt;strong&gt;暴露了AI内容生成代码和提示词&lt;/strong&gt;。这些提示词揭示了欺诈者如何利用AI：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;提示词明确要求内容"注入真实情感"以提高用户参与度&lt;/li&gt;
+&lt;li&gt;图像生成指令要求避免"人工感"，追求照片级真实&lt;/li&gt;
+&lt;li&gt;模板化结构使内容生产可以完全自动化&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;MFA网站的广告生态影响&lt;/h2&gt;
+&lt;p&gt;MFA（Made for Advertising）网站的问题在于：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;稀释广告预算&lt;/strong&gt;：广告主的预算被导向低质量、无真实用户价值的站点&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;品牌安全风险&lt;/strong&gt;：品牌广告可能出现在AI生成的低质量内容旁边&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;归因污染&lt;/strong&gt;：虚假展示和点击干扰广告效果度量&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;规模化威胁&lt;/strong&gt;：生成式AI使MFA网站的创建成本趋近于零&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;行业数据&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;DoubleVerify在2026年初识别出&lt;strong&gt;数千个AI垃圾网站&lt;/strong&gt;，覆盖多种语言&lt;/li&gt;
+&lt;li&gt;广告技术欺诈损失预计到2028年将超过&lt;strong&gt;1700亿美元&lt;/strong&gt;（Juniper Research）&lt;/li&gt;
+&lt;li&gt;AI驱动的金融科技欺诈预计到2027年达到&lt;strong&gt;400亿美元&lt;/strong&gt;（Deloitte）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;检测方法&lt;/h2&gt;
+&lt;p&gt;DoubleVerify使用多种方法检测AI生成的MFA网站：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;模式识别&lt;/strong&gt;：识别跨站点的模板化内容结构&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;行为分析&lt;/strong&gt;：检测非人类的流量模式和参与度指标&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;元数据分析&lt;/strong&gt;：分析站点元数据中的AI生成痕迹&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;视觉/结构检查&lt;/strong&gt;：识别AI生成图像的特征&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;生成式AI正在&lt;strong&gt;根本性地改变广告欺诈的成本结构&lt;/strong&gt;。创建一个看起来真实的网站的成本从数百美元降至不到2美元。这意味着：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;品牌安全工具必须升级&lt;/strong&gt;：传统的域名黑名单无法跟上AI垃圾站点的增长速度&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;供应链透明度更重要&lt;/strong&gt;：ads.txt和sellers.json是基础，但不足以检测AI生成的MFA&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关注内容质量信号&lt;/strong&gt;：页面停留时间、滚动深度、回访率等参与度指标是区分真实站点和MFA的关键&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; DoubleVerify uncovered AutoBait in early 2026 — a network of &lt;strong&gt;200+ MFA (Made for Advertising) domains&lt;/strong&gt; posing as independent lifestyle blogs. All sites share identical AI-generated articles and images from LLMs and flux-1.1-pro image model, costing less than $2.25 per page, generating tens of millions of fake impressions.&lt;/p&gt;
+
+&lt;h2&gt;New Fraud Paradigm: AI-Powered&lt;/h2&gt;
+&lt;p&gt;AutoBait represents a &lt;strong&gt;new paradigm in ad fraud&lt;/strong&gt; — using generative AI to mass-produce seemingly authentic website content:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;200+ MFA domains&lt;/strong&gt;: Website network disguised as independent lifestyle blogs&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;High-end LLM articles&lt;/strong&gt;: Template prompts optimized for psychology — frontloading sensational points, injecting "real emotion (fear, anger, shock, relief)"&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;flux-1.1-pro image model&lt;/strong&gt;: Generates images instructed to look "NOT artificial, stylized, or generated by AI"&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ultra-low cost&lt;/strong&gt;: Less than $2.25 per 56-slide page&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scale&lt;/strong&gt;: Tens of millions of ad impressions generated&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;Generative AI is &lt;strong&gt;fundamentally changing the cost structure of ad fraud&lt;/strong&gt;. The cost of creating a seemingly authentic site dropped from hundreds of dollars to under $2. Brand safety tools must upgrade, supply chain transparency matters more, and engagement quality signals (time on page, scroll depth, return visits) are key to distinguishing real sites from MFA.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://doubleverify.com/blog/web/verify/dv-exclusive-inside-an-ai-slop-factory"&gt;https://doubleverify.com/blog/web/verify/dv-exclusive-inside-an-ai-slop-factory&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">4ea9b456-1fe4-5296-b13a-524f91ae1dbc</guid>
+      <pubDate>Sat, 16 May 2026 00:01:28 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://doubleverify.com/blog/web/verify/dv-exclusive-inside-an-ai-slop-factory</link>
+    </item>
+    <item>
+      <title>Bid2X：阿里巴巴的出价基础模型——GMV+4.65%、ROI+2.44%的KDD 2025实践</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; 阿里巴巴在KDD 2025提出Bid2X——一个"出价基础模型"，通过统一序列嵌入和双注意力机制学习竞价环境的动态特性。在线A/B测试显示&lt;strong&gt;GMV提升4.65%、ROI提升2.44%&lt;/strong&gt;，能够泛化到异构竞价场景。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;现有自动出价系统面临一个根本性矛盾：&lt;strong&gt;专用性vs泛化性&lt;/strong&gt;。为每个广告主训练专用模型效果好但成本高；使用通用模型则难以适应不同广告主的预算、目标和竞争环境差异。Bid2X试图解决这个矛盾——构建一个能理解竞价环境动态的"基础模型"。&lt;/p&gt;
+
+&lt;h2&gt;核心架构&lt;/h2&gt;
+&lt;p&gt;Bid2X的设计理念借鉴了NLP领域的基础模型思想：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;统一序列嵌入&lt;/strong&gt;：将不同类型的竞价信号（价格、竞争、预算状态）统一编码为序列表示&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;双注意力机制&lt;/strong&gt;：同时关注时间维度（历史竞价序列）和空间维度（不同竞价环境的相似性）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;环境动态建模&lt;/strong&gt;：学习竞价环境的变化模式，而非仅仅学习最优出价策略&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;为什么需要"出价基础模型"&lt;/h2&gt;
+&lt;p&gt;传统方法的问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;冷启动&lt;/strong&gt;：新广告主缺乏历史数据，RL模型需要大量探索&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;分布漂移&lt;/strong&gt;：竞价环境随时间变化，固定策略会失效&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;场景碎片化&lt;/strong&gt;：不同行业、不同目标的广告主需要不同的出价策略&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Bid2X通过学习环境动态的通用表示，可以：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从少量历史数据快速适应新广告主&lt;/li&gt;
+&lt;li&gt;自动检测和适应环境变化&lt;/li&gt;
+&lt;li&gt;在不同场景间迁移知识&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;在线A/B测试结果&lt;/h2&gt;
+&lt;p&gt;在阿里巴巴广告平台的在线实验中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GMV提升4.65%&lt;/strong&gt;：总成交额显著增长&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ROI提升2.44%&lt;/strong&gt;：投资回报率同步改善&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这些结果在&lt;strong&gt;已有较强基线&lt;/strong&gt;的生产系统上取得，说明基础模型方法确实能捕捉到专用模型遗漏的优化空间。&lt;/p&gt;
+
+&lt;h2&gt;与其他生成式出价方法的比较&lt;/h2&gt;
+&lt;p&gt;Bid2X与DiffBid（同为阿里巴巴工作）代表了两种不同的技术路线：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DiffBid&lt;/strong&gt;：生成式方法，直接生成出价轨迹&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bid2X&lt;/strong&gt;：基础模型方法，学习环境动态的通用表示&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;两者可以互补：Bid2X提供环境理解，DiffBid负责轨迹生成。未来可能出现结合两者优势的混合架构。&lt;/p&gt;
+
+&lt;h2&gt;行业趋势&lt;/h2&gt;
+&lt;p&gt;Bid2X反映了广告技术领域的一个重要趋势——&lt;strong&gt;基础模型化&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;NLP领域：BERT/GPT → 通用语言理解&lt;/li&gt;
+&lt;li&gt;广告领域：专用出价模型 → 通用竞价环境理解&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;类似的"基础模型"思路也出现在其他广告子领域：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CTR预测&lt;/strong&gt;：统一的用户行为序列模型&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;创意优化&lt;/strong&gt;：通用的广告创意效果预测模型&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;归因建模&lt;/strong&gt;：跨渠道统一归因模型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;Bid2X的成功表明，&lt;strong&gt;竞价环境的理解能力&lt;/strong&gt;可能比单纯的出价优化更重要。对于拥有大量异构广告主的平台，投资于"出价基础模型"可能比为每个场景训练专用模型更具规模效应。建议评估在自有数据上训练竞价环境基础模型的可行性和收益。&lt;/p&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Alibaba proposes Bid2X at KDD 2025 — a "bidding foundation model" that learns bidding environment dynamics through uniform series embeddings and dual attention. Online A/B tests show &lt;strong&gt;+4.65% GMV and +2.44% ROI&lt;/strong&gt;, generalizing across heterogeneous bidding scenarios.&lt;/p&gt;
+
+&lt;h2&gt;Core Architecture&lt;/h2&gt;
+&lt;p&gt;Bid2X borrows the foundation model concept from NLP:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Uniform series embeddings&lt;/strong&gt;: Encodes different bidding signals (prices, competition, budget status) into unified sequence representations&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dual attention&lt;/strong&gt;: Simultaneously attends to temporal dimension (historical bidding sequences) and spatial dimension (similarity across bidding environments)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Environment dynamics modeling&lt;/strong&gt;: Learns patterns of bidding environment changes, not just optimal bidding strategies&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Why a "Bidding Foundation Model" is Needed&lt;/h2&gt;
+&lt;p&gt;Traditional approaches suffer from cold-start, distribution drift, and scenario fragmentation. Bid2X learns general representations of environment dynamics, enabling rapid adaptation to new advertisers, automatic detection of environment changes, and knowledge transfer across scenarios.&lt;/p&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;Bid2X's success suggests that &lt;strong&gt;bidding environment understanding&lt;/strong&gt; may be more important than pure bidding optimization. For platforms with many heterogeneous advertisers, investing in a "bidding foundation model" may offer better scale effects than training specialized models per scenario.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2510.23410"&gt;https://arxiv.org/abs/2510.23410&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">b590b56c-8058-5ab8-baf0-fd52abc6aac0</guid>
+      <pubDate>Sat, 16 May 2026 00:02:14 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2510.23410</link>
+    </item>
+    <item>
+      <title>贝叶斯预测概率：Meta/Instagram解决A/B测试偷看问题的实验方法论（2025）</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Meta/Instagram团队（Zaidi et al., 2025）提出贝叶斯预测概率方法，解决在线实验中"偷看"（peeking）导致的假阳性率膨胀问题。该方法在Instagram部署，支持有效的中期分析而无需复杂的数值积分技术。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;在线实验平台的用户"越来越多地使用临时偷看方法"来决定实验是否成功。这些方法"容易出错，且往往与实验最终结果不一致"——最典型的后果是&lt;strong&gt;假阳性率膨胀&lt;/strong&gt;（Type I Error Inflation）。实验者在看到p值低于0.05时就停止实验，但这个p值可能因为多次偷看而不再有效。&lt;/p&gt;
+
+&lt;h2&gt;核心方法：贝叶斯预测概率&lt;/h2&gt;
+&lt;p&gt;论文提出用贝叶斯预测概率替代传统的频率派p值：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;预测概率&lt;/strong&gt;：计算"如果实验继续到预定结束，观察到显著效应"的概率&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;无需数值积分&lt;/strong&gt;：展示了如何在"无需数值积分技术"的情况下估计预测概率，降低计算复杂度&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;有效中期分析&lt;/strong&gt;：在实验进行中任意时间点进行有效的中期分析&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;为什么这对广告实验重要&lt;/h2&gt;
+&lt;p&gt;广告实验有其特殊性：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;高价值决策&lt;/strong&gt;：广告实验结果直接影响数百万美元的广告支出分配&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;长周期效应&lt;/strong&gt;：某些广告效果（如品牌认知）需要长时间才能显现&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;季节性干扰&lt;/strong&gt;：广告效果受季节、促销等因素影响，需要灵活的停止规则&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;多指标权衡&lt;/strong&gt;：CTR、CVR、ROAS等多个指标可能给出矛盾信号&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;贝叶斯预测概率提供了一个&lt;strong&gt;数学上严格&lt;/strong&gt;的框架，在不膨胀假阳性率的前提下支持灵活的实验监控。&lt;/p&gt;
+
+&lt;h2&gt;Instagram部署经验&lt;/h2&gt;
+&lt;p&gt;论文报告了在Instagram的实际部署：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用实验数据验证方法的有效性&lt;/li&gt;
+&lt;li&gt;解决了Instagram实验平台中用户频繁偷看的问题&lt;/li&gt;
+&lt;li&gt;提供了实用的决策规则：何时可以提前停止实验，何时需要继续&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;与多重比较校正的关系&lt;/h2&gt;
+&lt;p&gt;Spotify的Schultzberg（2026）在对1296个实验的分析中发现：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Bonferroni校正的分母应该是&lt;strong&gt;成功指标数量&lt;/strong&gt;，而非总指标数量&lt;/li&gt;
+&lt;li&gt;Holm、Hommel等更复杂方法仅带来"约4-5个百分点的上线率提升"&lt;/li&gt;
+&lt;li&gt;当非空指标数量较少时，"差距缩小到几乎为零"&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这说明&lt;strong&gt;简单的多重比较校正&lt;/strong&gt;在大多数实际场景中已经足够，复杂的校正方法收益有限。贝叶斯预测概率则从另一个角度解决偷看问题——不是校正p值，而是直接计算预测概率。&lt;/p&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;如果你的实验平台存在"偷看"问题（实验者频繁检查结果并据此决定是否停止），贝叶斯预测概率是一个&lt;strong&gt;实用且数学上严格&lt;/strong&gt;的解决方案。建议：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在实验平台上实现预测概率的实时计算&lt;/li&gt;
+&lt;li&gt;提供明确的决策规则：预测概率&gt;80%可以考虑停止，&lt;20%可以考虑放弃&lt;/li&gt;
+&lt;li&gt;结合多重比较校正处理多指标场景&lt;/li&gt;
+&lt;li&gt;记录所有中期分析的时间点和结果，用于事后审计&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Meta/Instagram team (Zaidi et al., 2025) proposes Bayesian Predictive Probabilities to address inflated false positive rates from "peeking" in online experiments. Deployed at Instagram, enabling valid interim analyses without complex numerical integration.&lt;/p&gt;
+
+&lt;h2&gt;Core Method: Bayesian Predictive Probabilities&lt;/h2&gt;
+&lt;p&gt;The paper proposes using Bayesian predictive probabilities instead of traditional frequentist p-values:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Predictive probability&lt;/strong&gt;: Computes the probability of observing a significant effect if the experiment continues to its predetermined end&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;No numerical integration needed&lt;/strong&gt;: Shows how to estimate predictive probabilities without numerical integration techniques&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Valid interim analyses&lt;/strong&gt;: Enables valid interim analyses at any point during the experiment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;If your experiment platform has a "peeking" problem, Bayesian Predictive Probabilities is a &lt;strong&gt;practical and mathematically rigorous&lt;/strong&gt; solution. Implement real-time predictive probability computation, provide clear decision rules (&gt;80% can consider stopping, &lt;20% can consider abandoning), and combine with multiple comparison corrections for multi-metric scenarios.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2511.06320"&gt;https://arxiv.org/abs/2511.06320&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">e66c1633-5921-5a79-981e-b1517db99223</guid>
+      <pubDate>Sat, 16 May 2026 00:02:14 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2511.06320</link>
+    </item>
+    <item>
+      <title>GRAD：美团的MoE+Causal Transformer生成式出价——ROI提升10.68%的KDD 2026实践</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; 美团在KDD 2026提出GRAD——结合Action-Mixture-of-Experts与Causal Transformer的生成式大规模预训练出价模型。2025年1-3月部署期间，&lt;strong&gt;GMV提升2.18%、ROI提升10.68%&lt;/strong&gt;，展示了预训练+微调范式在广告出价中的实用价值。&lt;/p&gt;
+
+&lt;h2&gt;问题背景&lt;/h2&gt;
+&lt;p&gt;美团作为本地生活服务平台，广告出价面临独特挑战：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;场景多样性&lt;/strong&gt;：外卖、到店、酒旅等不同业务场景的竞价环境差异大&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;广告主异构性&lt;/strong&gt;：从大型连锁到个体商户，预算和目标差异巨大&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数据稀疏性&lt;/strong&gt;：许多广告主历史数据有限，难以训练专用模型&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;核心架构：MoE + Causal Transformer&lt;/h2&gt;
+&lt;p&gt;GRAD的技术创新在于结合了两种强大的架构：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Action-Mixture-of-Experts（MoE）&lt;/strong&gt;：不同"专家"网络处理不同的竞价场景和广告主类型，门控机制自动路由到最合适的专家&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Causal Transformer&lt;/strong&gt;：用因果注意力机制处理竞价序列，捕捉时间依赖关系&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;大规模预训练&lt;/strong&gt;：在海量历史竞价数据上预训练，然后针对特定广告主微调&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;为什么MoE适合出价&lt;/h2&gt;
+&lt;p&gt;MoE架构在出价场景有几个天然优势：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;场景专业化&lt;/strong&gt;：不同业务场景（外卖vs酒旅）的竞价模式不同，MoE可以自动学习场景特定的专家&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;计算效率&lt;/strong&gt;：每次推理只激活部分专家，降低计算成本&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;扩展性&lt;/strong&gt;：可以通过增加专家数量来扩展模型容量，而不增加单次推理成本&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;部署结果&lt;/h2&gt;
+&lt;p&gt;2025年1-3月在美团广告平台的部署结果：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;GMV提升2.18%&lt;/strong&gt;：总成交额显著增长&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ROI提升10.68%&lt;/strong&gt;：投资回报率大幅提升&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;ROI的提升幅度（10.68%）远大于GMV（2.18%），说明模型在&lt;strong&gt;预算分配效率&lt;/strong&gt;上有显著改善——同样的广告预算产生了更高的回报。&lt;/p&gt;
+
+&lt;h2&gt;预训练+微调范式&lt;/h2&gt;
+&lt;p&gt;GRAD体现了NLP领域"预训练+微调"范式向广告技术的迁移：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;预训练阶段&lt;/strong&gt;：在全平台海量竞价数据上学习通用的竞价模式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;微调阶段&lt;/strong&gt;：针对特定广告主或场景进行个性化调整&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优势&lt;/strong&gt;：解决冷启动问题，新广告主可以从预训练模型开始，只需少量数据即可微调&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;与其他生成式出价方法的比较&lt;/h2&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;方法&lt;/th&gt;&lt;th&gt;核心思想&lt;/th&gt;&lt;th&gt;部署结果&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;DiffBid（阿里）&lt;/td&gt;&lt;td&gt;扩散模型生成轨迹&lt;/td&gt;&lt;td&gt;GMV+2.81%, ROI+3.36%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Bid2X（阿里）&lt;/td&gt;&lt;td&gt;出价基础模型&lt;/td&gt;&lt;td&gt;GMV+4.65%, ROI+2.44%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;GRAD（美团）&lt;/td&gt;&lt;td&gt;MoE+Causal Transformer&lt;/td&gt;&lt;td&gt;GMV+2.18%, ROI+10.68%&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;Expert-Guided Diffusion&lt;/td&gt;&lt;td&gt;专家引导扩散规划&lt;/td&gt;&lt;td&gt;转化+11.29%, 收入+12.36%&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;值得注意的是，GRAD的&lt;strong&gt;ROI提升幅度（10.68%）&lt;/strong&gt;在所有方法中最高，这可能与MoE架构的场景专业化能力有关。&lt;/p&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;GRAD的成功表明，&lt;strong&gt;预训练+微调&lt;/strong&gt;范式在广告出价中具有实用价值。对于拥有多种业务场景的平台，MoE架构可以自动学习场景特定的出价策略。建议：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;评估在全平台数据上预训练出价模型的可行性&lt;/li&gt;
+&lt;li&gt;使用MoE架构处理异构的广告主和场景&lt;/li&gt;
+&lt;li&gt;关注ROI而非仅关注GMV——预算分配效率同样重要&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Meituan proposes GRAD at KDD 2026 — combining Action-Mixture-of-Experts with Causal Transformer for generative large-scale pre-trained bidding. During Jan-Mar 2025 deployment: &lt;strong&gt;+2.18% GMV and +10.68% ROI&lt;/strong&gt;, demonstrating the practical value of pre-training + fine-tuning in ad bidding.&lt;/p&gt;
+
+&lt;h2&gt;Core Architecture: MoE + Causal Transformer&lt;/h2&gt;
+&lt;p&gt;GRAD's technical innovation combines two powerful architectures:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Action-Mixture-of-Experts (MoE)&lt;/strong&gt;: Different "expert" networks handle different bidding scenarios and advertiser types, with gating mechanisms automatically routing to the most appropriate expert&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Causal Transformer&lt;/strong&gt;: Uses causal attention to process bidding sequences, capturing temporal dependencies&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Large-scale pre-training&lt;/strong&gt;: Pre-trains on massive historical bidding data, then fine-tunes for specific advertisers&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Deployment Results&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;+2.18% GMV&lt;/strong&gt;: Significant growth in total transaction volume&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;+10.68% ROI&lt;/strong&gt;: Substantial improvement in return on investment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The ROI improvement (10.68%) far exceeds GMV (2.18%), indicating significant improvement in &lt;strong&gt;budget allocation efficiency&lt;/strong&gt; — the same ad budget produces higher returns.&lt;/p&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;GRAD's success demonstrates that the &lt;strong&gt;pre-training + fine-tuning&lt;/strong&gt; paradigm has practical value in ad bidding. For platforms with multiple business scenarios, MoE architecture can automatically learn scenario-specific bidding strategies.&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://arxiv.org/abs/2508.02002"&gt;https://arxiv.org/abs/2508.02002&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">bdc4bf8a-7237-58ce-8170-e91149c4bf4c</guid>
+      <pubDate>Sat, 16 May 2026 00:03:05 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://arxiv.org/abs/2508.02002</link>
+    </item>
+    <item>
+      <title>Google废弃Privacy Sandbox：Topics、Protected Audience等广告API退役——行业转向W3C标准</title>
+      <description>&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Google在2025年10月宣布废弃大部分Privacy Sandbox广告API，包括Topics、Protected Audience、Attribution Reporting等。原因是采用率低、预期价值不足。第三方Cookie在Chrome中维持现状，行业转向W3C互操作标准。&lt;/p&gt;
+
+&lt;h2&gt;废弃的API&lt;/h2&gt;
+&lt;p&gt;以下API已提交Intent to Deprecate and Remove：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Topics API&lt;/strong&gt;（Chrome和Android）：基于浏览兴趣的主题定向&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protected Audience API&lt;/strong&gt;（Chrome和Android）：前身为FLEDGE，用于再营销和自定义受众&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Attribution Reporting API&lt;/strong&gt;（Chrome和Android）：隐私保护的转化归因&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protected App Signals&lt;/strong&gt;：应用端信号保护&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private Aggregation / Shared Storage&lt;/strong&gt;：隐私聚合和共享存储&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;IP Protection&lt;/strong&gt;：IP地址隐私保护&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;On-Device Personalization&lt;/strong&gt;：设备端个性化&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Related Website Sets&lt;/strong&gt;：关联网站集&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SelectURL&lt;/strong&gt;：URL选择API&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SDK Runtime&lt;/strong&gt;：SDK运行时&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;保留的API&lt;/h2&gt;
+&lt;p&gt;以下API继续维护：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CHIPS&lt;/strong&gt;：分区Cookies&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FedCM&lt;/strong&gt;：联合凭据管理&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Private State Tokens&lt;/strong&gt;：私有状态令牌&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fenced Frames&lt;/strong&gt;：隔离框架&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Storage and Network State Partitioning&lt;/strong&gt;：存储和网络状态分区&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bounce tracking mitigations&lt;/strong&gt;：弹跳跟踪缓解&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Storage Access API&lt;/strong&gt;：存储访问API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;废弃原因&lt;/h2&gt;
+&lt;p&gt;Google官方给出的原因：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;采用率低&lt;/strong&gt;：广告主和发布商对Privacy Sandbox API的采用不足&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;预期价值不足&lt;/strong&gt;：API带来的价值不足以证明持续投入的合理性&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;行业协调困难&lt;/strong&gt;：W3C和UK CMA流程中的不确定性阻碍了进展&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;学术研究也支持这一判断：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Verna et al.（2025）&lt;/strong&gt;：发现Topics API在实际中采用率低、使用模式可疑&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Srivirote et al.（2026）&lt;/strong&gt;：证明Topics API可能泄露用户敏感信息&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kirillov et al.（2025）&lt;/strong&gt;：认为Privacy Sandbox可能适得其反，推动指纹识别&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;行业影响&lt;/h2&gt;
+&lt;p&gt;Privacy Sandbox废弃对广告技术行业的影响深远：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第三方Cookie维持现状&lt;/strong&gt;：Chrome不会全面淘汰第三方Cookie&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;归因转向W3C标准&lt;/strong&gt;：Google将重点转向Private Advertising Technology Working Group的互操作归因标准&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;替代方案兴起&lt;/strong&gt;：联邦学习、差分隐私、数据洁净室等替代方案更加重要&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第一方数据战略&lt;/strong&gt;：发布商和广告主更依赖第一方数据&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;替代技术路径&lt;/h2&gt;
+&lt;p&gt;在Privacy Sandbox废弃后，行业正在探索多条替代路径：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;浏览器端联邦学习&lt;/strong&gt;：如AdFL（Alemari et al., 2026），在浏览器内直接训练模型&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;差分隐私广告定向&lt;/strong&gt;：如Blind Targeting（Shchetkina, 2025），在严格DP约束下维持97-101%的定向效果&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;数据洁净室&lt;/strong&gt;：如Li et al.（RecSys 2024）的批次级聚合梯度方法&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SKAdNetwork/AdAttributionKit&lt;/strong&gt;：Apple的iOS归因框架继续演进&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;W3C互操作标准&lt;/strong&gt;：通过标准化实现跨平台隐私保护归因&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;对从业者的启示&lt;/h2&gt;
+&lt;p&gt;Privacy Sandbox的废弃是一个&lt;strong&gt;重要的战略转折点&lt;/strong&gt;。对于广告技术从业者：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;不要依赖单一平台API&lt;/strong&gt;：平台策略可能随时变化&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;投资算法层面的隐私保护&lt;/strong&gt;：联邦学习、差分隐私等技术不依赖平台支持&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;关注W3C标准进展&lt;/strong&gt;：Private Advertising Technology Working Group的工作将定义下一代归因标准&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;加强第一方数据能力&lt;/strong&gt;：在Cookie存活但信号减弱的环境下，第一方数据更加重要&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;hr/&gt;
+
+&lt;p&gt;&lt;strong&gt;English Translation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;TL;DR:&lt;/strong&gt; Google announced in October 2025 the retirement of most Privacy Sandbox advertising APIs, including Topics, Protected Audience, Attribution Reporting, and more. Reasons: low adoption, insufficient expected value. Third-party cookies remain in Chrome; industry pivots to W3C interoperable standards.&lt;/p&gt;
+
+&lt;h2&gt;Retired APIs&lt;/h2&gt;
+&lt;p&gt;APIs with Intent to Deprecate and Remove filed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Topics API&lt;/strong&gt; (Chrome and Android): Interest-based targeting&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protected Audience API&lt;/strong&gt; (Chrome and Android): Formerly FLEDGE, for retargeting&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Attribution Reporting API&lt;/strong&gt; (Chrome and Android): Privacy-preserving conversion attribution&lt;/li&gt;
+&lt;li&gt;And 7 more APIs including Protected App Signals, Private Aggregation, IP Protection, On-Device Personalization, etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;Retirement Reasons&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Low adoption&lt;/strong&gt;: Insufficient advertiser and publisher adoption&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Insufficient expected value&lt;/strong&gt;: Value不足以justify continued investment&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Industry coordination difficulties&lt;/strong&gt;: Uncertainty in W3C and UK CMA processes hampered progress&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;Implications for Practitioners&lt;/h2&gt;
+&lt;p&gt;The Privacy Sandbox retirement is a &lt;strong&gt;critical strategic inflection point&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Don't depend on single platform APIs&lt;/strong&gt;: Platform strategies can change anytime&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Invest in algorithm-level privacy&lt;/strong&gt;: FL, DP techniques don't depend on platform support&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Follow W3C standard progress&lt;/strong&gt;: PAT WG work will define next-gen attribution standards&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Strengthen first-party data capabilities&lt;/strong&gt;: First-party data becomes more important as signals weaken&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://privacysandbox.google.com/news/update-on-plans-for-privacy-sandbox-technologies/"&gt;https://privacysandbox.google.com/news/update-on-plans-for-privacy-sandbox-technologies/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">15c46b6b-ce92-5f8e-92f5-471aca161d39</guid>
+      <pubDate>Sat, 16 May 2026 00:03:06 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://privacysandbox.google.com/news/update-on-plans-for-privacy-sandbox-technologies/</link>
     </item>
   </channel>
 </rss>
