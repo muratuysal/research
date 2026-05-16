@@ -1,12 +1,25 @@
 <?xml version='1.0' encoding='utf-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<rss xmlns:ns0="http://www.w3.org/2005/Atom" version="2.0">
   <channel>
     <title>Ad ML Research Feed</title>
     <description>Deep research on advertisement CTR/CVR models, A/B online gains, check arxiv.org, write report in english</description>
     <link>https://muratuysal.github.io/research/ad-ml-research.xml</link>
-    <lastBuildDate>Sat, 16 May 2026 01:10:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 16 May 2026 01:36:22 +0000</lastBuildDate>
     <generator>cc-deepfeed</generator>
-    <atom:link rel="hub" href="https://pubsubhubbub.appspot.com" />
-    <atom:link rel="self" href="https://muratuysal.github.io/research/ad-ml-research.xml" type="application/rss+xml" />
+    <ns0:link rel="hub" href="https://pubsubhubbub.appspot.com" />
+    <ns0:link rel="self" href="https://muratuysal.github.io/research/ad-ml-research.xml" type="application/rss+xml" />
+    <item>
+      <title>Test Entry</title>
+      <description>&lt;p&gt;Test content&lt;/p&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;strong&gt;Sources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href="https://example.com"&gt;https://example.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <guid isPermaLink="false">7e306db1-14c2-56a7-bf2f-6397c779b5ae</guid>
+      <pubDate>Sat, 16 May 2026 01:36:22 +0000</pubDate>
+      <category>ad-ml-optimization</category>
+      <link>https://example.com</link>
+    </item>
   </channel>
 </rss>
